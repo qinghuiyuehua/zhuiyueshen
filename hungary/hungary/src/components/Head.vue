@@ -10,7 +10,7 @@
               <!--<router-link :to="{path:'/registe'}">注册</router-link>-->
             </span>
             <span class="top_one_span_right_load pull-right">
-              <router-link  :to="{path:'/Land'}">登陆|</router-link>
+              <router-link  :to="{path:'/Login'}">登陆|</router-link>
             </span>
           </li>
           <li class="top_two">
