@@ -3,7 +3,7 @@
       <router-view></router-view>
       <router-view name="hc"></router-view>
       <router-view name="gc"></router-view>
-      <router-link :to="{path:'/Land'}"></router-link>
+      <router-link :to="{path:'/Login'}"></router-link>
     </div>
 </template>
 

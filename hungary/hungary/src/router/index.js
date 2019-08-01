@@ -6,7 +6,7 @@ import Header from "../components/Header"
 import Head from "../components/Head"
 import HotCity from "../components/HotCity"
 import GroupCity from "../components/GroupCity"
-import Land from "../components/Land"
+import Login from "../components/Login"
 
 export default new Router({
   routes: [
@@ -18,7 +18,7 @@ export default new Router({
               hc:HotCity,
               gc:GroupCity,
             }},
-        {path:"/Land",component:Land},
+        {path:"/Login",component:Login},
       ]}
   ]
 })
