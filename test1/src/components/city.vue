@@ -6,7 +6,8 @@
         <a href="" target="_top" >ele.me</a>
       </span>
       <span class="login_zhuce pull-right ">
-        <router-link :to="{path:'/login'}" style="color: white">登录|注册</router-link>
+        <router-link :to="{path:'/login'}" style="color: white" v-if="get1">登录|注册</router-link>
+        <router-link :to="{path:'/mine'}" v-if="get2">小人</router-link>
       </span>
     </div>
       <!--当前定位城市-->
@@ -69,15 +70,13 @@
         data(){
           return{
             city1:[],
-            city2:[]
+            city2:[],
+            get1:true,
+            get2:false,
+            name1:[],
           }
         },
       methods:{
-        sorts(){
-          for(let i = 65; i <=90; i++){
-
-          }
-        }
       },
         created(){
           //热门城市
@@ -111,6 +110,19 @@
             console.log(error);
           });
 
+          // 判断是否已经登陆过或者注册过,如发生过,就将字变成小图标
+          if(this.$store.state.a.flag=="ok"){
+              this.get1 = false;
+              this.get2 = true;
+
+          }
+
+
+           // console.log(this.$route.params.a);
+           // if(this.$route.params.a == 1){
+           //   this.get1 = false;
+           //   this.get2 = true;
+           // }
         }
     }
 </script>

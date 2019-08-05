@@ -8,9 +8,11 @@
   import "../node_modules/bootstrap/dist/css/bootstrap.css"
   import City from "./components/city";
   import Login from "./components/login";
+  import Person from "./components/Person";
+  import UpdateName from "./components/UpdateName";
 export default {
   name: 'App',
-  components: {Login, City}
+  components: { Person, Login, City, UpdateName}
 }
 </script>
 
