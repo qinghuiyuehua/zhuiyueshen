@@ -8,6 +8,18 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 
+
+import VueX from "vuex";
+Vue.use(VueX);
+
+import MsgModule from "./vuexModule/Message"
+
+const store = new VueX.Store({
+  modules:{
+    a:MsgModule,
+  }
+})
+
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios);
@@ -23,10 +35,19 @@ Vue.use(ElementUI);
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper, /* { default global options } */)
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
+// Vue.use(ElementUI);
+
+// import VueAwesomeSwiper from 'vue-awesome-swiper'
+// import 'swiper/dist/css/swiper.css'
+// Vue.use(VueAwesomeSwiper, /* { default global options } */)
+
 
 new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  store
 })

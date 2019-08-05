@@ -10,9 +10,12 @@
   import City from "./components/city";
   import Login from "./components/login";
   import Nav from "./components/Nav";
+  import Person from "./components/Person";
+  import UpdateName from "./components/UpdateName";
 export default {
   name: 'App',
-  components: {Nav, Login, City}
+  components: {Nav, Login, City,Person,UpdateName},
+
 }
 </script>
 
