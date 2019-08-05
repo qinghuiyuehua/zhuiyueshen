@@ -6,19 +6,18 @@
         right-text=""
         left-arrow
         @click-left="onClickLeft"
-        @click-right="onClickRight"
       />
       <!--账号-->
       <section class="one">
         <span>
-          <input type="text" placeholder="账号">
+          <input type="text" placeholder="账号" id="names">
         </span>
       </section>
       <hr>
       <!--密码-->
       <section class="one">
         <span>
-          <input :type="checked?shows1:shows2" placeholder="密码">
+          <input :type="checked?shows1:shows2" placeholder="密码" id="passwords">
         </span>
         <span class="move">
           <span class="move1">abc...</span>
@@ -34,7 +33,7 @@
       <section class="one">
         <span>
           <!--对验证码字数做限制-->
-          <input type="text" placeholder="验证码"oninput="if(value.length>4)value=value.slice(0,4);"/>
+          <input type="text" placeholder="验证码"oninput="if(value.length>4)value=value.slice(0,4);" id="tests"/>
         </span>
         <span>
           <span  class="move3">
@@ -66,7 +65,12 @@
 
 <script>
     import Vue from "vue";
+    import { Dialog } from 'vant';
+    Vue.use(Dialog);
     export default {
+      components: {
+        [Dialog.Component.name]: Dialog.Component
+      },
         name: "login",
         data() {
         return {
@@ -74,43 +78,101 @@
           shows1:'text',
           shows2:'password',
           code1:[],
-          code2:""
+          code2:"",
         };
       },
       methods:{
         onClickLeft() {
-          Toast('返回');
-        },
-        onClickRight() {
-          Toast('按钮');
+          this.$router.go(-1);
         },
         Getagain(){
-          Vue.axios.post("https://elm.cangdu.org/v1/captchas").then((result)=>{
-            console.log(result);
-            this.code1 = result.data;
-          }).catch((error)=>{
-            console.log(error);
+          this.$http({
+            method: 'post',
+            url: "https://elm.cangdu.org/v1/captchas",
+            withCredentials: true, // 默认的
+          }).then(res => {
+            console.log(res);
+            this.code1 = res.data;
           });
         },
         sends(){
-          //  登录接口
-          Vue.axios.post("https://elm.cangdu.org/v2/login").then((result)=>{
-            console.log(result);
-            this.code1 = result.data;
-          }).catch((error)=>{
-            console.log(error);
-          });
-        }
+
+          console.log(names.value,passwords.value,tests.value)
+           // 登录接口
+          // Vue.axios.post("https://elm.cangdu.org/v2/login",{ withCredentials: true,},{
+          //   params:{
+          //     username:names.value,
+          //     password:passwords.value,
+          //     captcha_code:tests.value,
+          //   }
+          // }).then((result)=>{
+          //   console.log(result);
+          //   this.code2 = result;
+          //   console.log(this.code2)
+          // }).catch((error)=>{
+          //   console.log(error);
+          // });
+
+          //先判断输入框的值是否符合要求
+          if(names.value==''||passwords.value==''||tests.value==''){
+              Dialog.alert({
+                message: "请输入用户名/密码/验证码",
+              }).then(() => {
+                // on close
+              });
+          }else{
+            this.$http({
+              method: 'post',
+              url: "https://elm.cangdu.org/v2/login",
+              withCredentials: true, // 默认的
+              data: {
+                captcha_code:tests.value ,
+                password: passwords.value,
+                username: names.value,
+              },
+            }).then(res => {
+              console.log(res.data);
+              if(res.data.id){
+                this.$store.commit("getMsg",names.value);
+                this.$store.commit("getFlag","ok");
+                //返回上一级页面
+                this.$router.go(-1);
+                //通过路由传值,让用户信息界面拿到值
+                // this.$router.push({query:res.data});
+                //成功后,通过传值,发送标识,让城市页面的注册登录改变成图标
+                // this.$router.push({name:'city',params:{a:1}});
+                // console.log(names.value);
+                // this.$router.push({name:'person',params:{a:names.value}});
+
+              }else{
+                //因输入不正确,再次调用验证码函数
+                this.Getagain();
+                Dialog.alert({
+                  message: res.data.message,
+                }).then(() => {
+                  // on close
+                });
+
+              }
+
+            });
+          }
+        },
+        // sendMsg(){
+        //   this.$store.commit("getMsg",names.value)
+        // }
       },
       created(){
-        //  验证码接口
-        Vue.axios.post("https://elm.cangdu.org/v1/captchas").then((result)=>{
-          console.log(result);
-          this.code1 = result.data;
-        }).catch((error)=>{
-          console.log(error);
-        });
+        this.$http({
+          method: 'post',
+          url: "https://elm.cangdu.org/v1/captchas",
+          withCredentials: true, // 默认的
 
+
+        }).then(res => {
+          console.log(res);
+            this.code1 = res.data;
+        });
       }
     }
 </script>
