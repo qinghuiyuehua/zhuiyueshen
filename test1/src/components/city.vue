@@ -19,9 +19,9 @@
       <hr>
       <!--定位城市-->
       <div class="dingwei">
-        <div class="dingwei1">
-            <span>郑州</span>
-            <span class="pull-right">符号</span>
+        <div class="dingwei1" @click="guessClick(city3)">
+            <span>{{city3.name}}</span>
+          <van-icon name="arrow" class="van1"/>
         </div>
       </div>
 
@@ -33,7 +33,7 @@
           热门城市
         </h4>
         <ul class="hot2">
-          <li v-for="(k,i) in city1">{{k.name}}</li>
+          <li v-for="(k,i) in city1" @click="hotClick(k)">{{k.name}}</li>
         </ul>
       </div>
 
@@ -42,7 +42,7 @@
           <li v-for="(k,i) in city2" class="one">
             <h4>{{k[0]}}</h4>
             <ul class="two">
-              <li v-for="(kk,ii) in k[1]" class="three">{{kk.name}}</li>
+              <li v-for="(kk,ii) in k[1]" class="three" @click="groupClick(kk)">{{kk.name}}</li>
             </ul>
           <div class="line"></div>
           </li>
@@ -69,23 +69,36 @@
         data(){
           return{
             city1:[],
-            city2:[]
+            city2:[],
+            city3:[]
           }
         },
       methods:{
-        sorts(){
-          for(let i = 65; i <=90; i++){
-
-          }
+        hotClick(V){
+          this.$router.push({path:"/SearchPage",query:{arrObj:V.id}});
+        },
+        guessClick(v){
+          this.$router.push({path:"/SearchPage",query:{arrObj:v.id}});
+        },
+        groupClick(v){
+          this.$router.push({path:"/SearchPage",query:{arrObj:v.id}});
         }
       },
+
         created(){
+          //当前城市
+          Vue.axios.get("https://elm.cangdu.org/v1/cities?type=guess").then((res)=>{
+            // console.log(res.data);
+            this.city3=res.data;
+          }).catch((error)=>{
+            console.log(error);
+          });
           //热门城市
           Vue.axios.get("https://elm.cangdu.org/v1/cities?type=hot").then((result)=>{
-            console.log(result);
+            // console.log(result);
             this.city1 = result.data;
             this.city1.map(function(value,index){
-              console.log(index,value.name);
+              // console.log(index,value.name);
             });
           }).catch((error)=>{
             console.log(error);
@@ -93,8 +106,8 @@
 
           // 所有城市
           Vue.axios.get("https://elm.cangdu.org/v1/cities?type=group").then((result)=>{
-            console.log(result);
-            console.log(result.data);
+            // console.log(result);
+            // console.log(result.data);
             //排序A-Z
             let a = [];
             for (let i = 65; i <= 90; i++) {
@@ -103,7 +116,7 @@
                 a.push([b,result.data[b]])
               }
             }
-            console.log(a);
+            // console.log(a);
             this.city2 = a;
 
 
@@ -161,11 +174,13 @@
     height: 4rem;
     position: absolute;
     top: 4rem;
-    font-size: 1.5rem;
+    font-size: 1rem;
     line-height: 4rem;
     border-bottom: 0.1rem solid gray;
+    padding: 0 1rem;
   }
   .dingwei{
+    padding: 0 1rem;
     width: 100%;
     height: 4rem;
     position: absolute;
@@ -194,7 +209,7 @@
     text-align: center;
     display: inline-block;
     width: 25%;
-    color: #3190e8;;
+    color: #3190e8;
     border: .1rem solid lightgrey;
     padding: 0.5rem;
   }
@@ -239,5 +254,18 @@
   }
   .three{
 
+  }
+.van1{
+  position: absolute;
+  right: .8rem;
+  top: 1rem;
+  color:#666;
+}
+.dingwei1{
+  position: relative;
+  color: #3190e8;
+}
+  .hot1{
+    padding: 0 1rem;
   }
 </style>
