@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Nav></Nav>
     <router-view></router-view>
   </div>
 </template>
@@ -8,14 +9,15 @@
   import "../node_modules/bootstrap/dist/css/bootstrap.css"
   import City from "./components/city";
   import Login from "./components/login";
+  import Nav from "./components/Nav";
 export default {
   name: 'App',
-  components: {Login, City}
+  components: {Nav, Login, City}
 }
 </script>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
 
 </head>
 
@@ -23,6 +25,7 @@ export default {
   *{
     margin: 0;
     padding: 0;
+    text-decoration: none;
   }
 #app {
   width: 100%;
