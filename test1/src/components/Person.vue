@@ -27,9 +27,9 @@
       </section>
 
       <section id="address" class="per">
-        <router-link :to="{path:'/city'}">
+        <router-link :to="{path:'/editaddress'}">
           <span style="line-height: 6rem;margin-left: 1rem">收货地址</span>
-          <span class="pull-right" style="line-height: 6rem;margin-right: -1rem" id="d">&gt
+          <span class="pull-right" style="line-height: 6rem;margin-right: 1rem" id="d">&gt
         </span>
         </router-link>
 
@@ -45,14 +45,14 @@
       </section>
       安全设置
       <section id="password" class="per">
-        <router-link :to="{path:'/city'}">
-          <span style="line-height: 6rem;margin-left: 1rem">手机</span>
+        <router-link :to="{path:'/updatepassword'}">
+          <span style="line-height: 6rem;margin-left: 1rem">修改密码</span>
           <span class="pull-right" style="line-height: 6rem;margin-right: 1rem" id="f">修改&gt
         </span>
         </router-link>
       </section>
       <!--退出登录按钮-->
-      <van-button type="danger"  size="large">退出登录</van-button>
+      <van-button type="danger"  size="large" @click="exits">退出登录</van-button>
     </div>
 </template>
 
@@ -69,17 +69,16 @@
         onClickLeft() {
           this.$router.go(-1);
         },
+        //退出登录
+        exits(){
+          this.$store.commit("clearUser");
+          this.$router.go(-1);
+        }
       },
-      // computed:{
-      //   names(){
-      //     return this.$store.state.a.message;
-      //   },
-      // },
       created(){
         this.names = this.$store.state.a.message;
-        if(this.$store.state.a.newName!=""){
-          this.names = this.$store.state.a.newName;
-        }
+        let abc = this.$store.state;
+        console.log(abc);
       }
     }
 
@@ -88,6 +87,8 @@
 <style scoped>
   a{
     color: black;
+    display: inline-block;
+    width: 100%;
   }
   .person{
     background: #f5f5f5;
@@ -118,9 +119,10 @@
     height: 10%;
     background: white;
     font-size: 2rem;
-    boder:1px solid gray;
+    border:0.01rem solid #333;
     border-left: none;
     border-right: none;
+    border-top: none;
   }
   #files{
     width: 100%;

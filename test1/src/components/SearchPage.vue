@@ -62,6 +62,8 @@
     mounted(){
       console.log(this.$route.query.arrObj,'是否能收到第一页传来的id值');
       this.cc1 = this.$route.query.arrObj;
+      localStorage.setItem("cityid",this.cc1);
+      console.log(localStorage.setItem("cityid",this.cc1));
       // 动态获取城市名
       let url1 = "https://elm.cangdu.org/v1/cities/"+this.cc1;
       Vue.axios.get(url1).then((result)=>{

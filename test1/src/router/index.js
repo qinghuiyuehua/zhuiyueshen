@@ -7,16 +7,22 @@ import City from  "../components/city"
 import searchPage from '../components/SearchPage'
 import Person from "../components/Person"
 import UpdateName from "../components/UpdateName"
+import EditAddress from "../components/EditAddress"
+import AddAddress from "../components/AddAddress"
+import SearchAddress from "../components/SearchAddress"
+import UpdatePassword from "../components/UpdatePassword"
 
 import Home from "../components/Home"
 import Find from "../components/Fimd"
 import Order from "../components/Order"
 import Mine from "../components/Mine"
 import Sort from "../components/Sort"
+import Nav from "../components/Nav"
 
 export default new Router({
   routes: [
     {path:"/",component:City},
+    {path:"/city",component:City},
     {path:"/login",component:Login},
     // {path:"/",redirect:"/home"},
     {path:"/home",component:Home},
@@ -30,5 +36,9 @@ export default new Router({
     {path:"/person",component:Person,name:"person"},
     {path:"/updatename",component:UpdateName,name:"updatename"},
     {path:"/mine",component:Mine,name:"mine"},
+    {path:"/editaddress",component:EditAddress,name:"editaddress"},
+    {path:"/addaddress",component:AddAddress,name:"addaddress"},
+    {path:"/searchaddress",component:SearchAddress,name:"searchaddress"},
+    {path:"/updatepassword",component:UpdatePassword,name:"updatepassword"},
   ]
 })
