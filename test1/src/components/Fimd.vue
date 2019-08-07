@@ -9,6 +9,7 @@
         <input type="search" placeholder="请输入商家或美食名称" class="search_input">
         <input type="submit" class="search_submit">
       </el-row>
+
     </div>
 </template>
 
@@ -17,7 +18,7 @@
       name: "Find",
       data() {
         return {
-          input: ''
+          input: '',
         }
       }
     }
@@ -28,6 +29,7 @@
     width:100%;
     line-height:3.5rem;
     background-color: #3190e8;
+    z-index:100;
   }
   .arrow-left{
     color:white;

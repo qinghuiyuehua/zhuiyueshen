@@ -8,6 +8,8 @@ import searchPage from '../components/SearchPage'
 import Person from "../components/Person"
 import UpdateName from "../components/UpdateName"
 
+
+import TwoApp from　"../components/TwoApp"
 import Home from "../components/Home"
 import Find from "../components/Fimd"
 import Order from "../components/Order"
@@ -18,12 +20,17 @@ export default new Router({
   routes: [
     {path:"/",component:City},
     {path:"/login",component:Login},
-    // {path:"/",redirect:"/home"},
-    {path:"/home",component:Home},
-    {path:"/find",component: Find},
-    {path:"/order",component:Order},
-    {path:"/mine",component:Mine},
-    {path:"/sort",component:Sort},
+
+
+    {path:"/twoapp",component:TwoApp,children:[
+        {path:"/",redirect:"/home"},
+        {path:"/home",component:Home},
+        {path:"/find",component: Find},
+        {path:"/order",component:Order},
+        {path:"/mine",component:Mine},
+        {path:"/sort",component:Sort},
+      ]},
+
     {path:"/SearchPage",component: searchPage,name:"xv"},
     {path:"/",component:City,name:"city"},
     {path:"/login",component:Login},
