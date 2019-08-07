@@ -1,26 +1,26 @@
 <template>
   <div id="app">
-    <Nav></Nav>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
   import "../node_modules/bootstrap/dist/css/bootstrap.css"
+  import "../node_modules/animate.css/animate.css"
+
   import City from "./components/city";
   import Login from "./components/login";
-  import Nav from "./components/Nav";
   import Person from "./components/Person";
   import UpdateName from "./components/UpdateName";
+  import TwoApp from "./components/TwoApp";
 export default {
   name: 'App',
-  components: {Nav, Login, City,Person,UpdateName},
+  components: {TwoApp, Login, City,Person,UpdateName},
 
 }
 </script>
 
 <head>
-  <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
 
 </head>
 

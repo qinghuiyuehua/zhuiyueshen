@@ -33,7 +33,7 @@
       <section class="one">
         <span>
           <!--对验证码字数做限制-->
-          <input type="text" placeholder="验证码"oninput="if(value.length>4)value=value.slice(0,4);" id="tests"/>
+          <input type="text" placeholder="验证码" oninput="if(value.length>4)value=value.slice(0,4);" id="tests"/>
         </span>
         <span>
           <span  class="move3">

@@ -1,6 +1,6 @@
 <template>
-    <div class="home">
 
+    <div class="home">
       <!--头部-->
       <div class="head">
         <van-icon name="search" class="search_img"/>
@@ -13,7 +13,7 @@
         <!--  0-7 分类  -->
                <swiper-slide>
                  <van-row class="nav_pic">
-                   <a  v-for="title in navArr0_7" href="###">
+                   <a  v-for="title in navArr0_7" @click="jump(title)">
                      <van-col span="6" class="title_col">
                  <img class="title_img" :src= "'https://fuss10.elemecdn.com' + title.image_url">
                  <p class="title_p">{{title.title}}</p>
@@ -25,7 +25,7 @@
         <!--  8-15 分类  -->
                <swiper-slide>
                  <van-row class="nav_pic">
-                   <a href="###"  v-for="title in navArr8_15">
+                   <a v-for="title in navArr8_15" @click="jump(title)">
                      <van-col span="6" class="title_col">
                  <img class="title_img" :src= "'https://fuss10.elemecdn.com' + title.image_url">
                  <p class="title_p">{{title.title}}</p>
@@ -60,7 +60,7 @@
               <van-rate class="star"
                 v-model="img.rating"
                 size="1"
-                color="#ff9a0d"
+                readonly
                 score-template="{value}">
               </van-rate>
             <span class="rating">{{img.rating}}</span>
@@ -77,6 +77,7 @@
         </div>
       </div>
     </div>
+
 </template>
 <script>
 import Vue from "vue"
@@ -86,6 +87,7 @@ import Vue from "vue"
         return{
           navArr0_7: [],
           navArr8_15: [],
+          navArr: [],
           swiperOption: {
             pagination: '.swiper-pagination',
             loop: true,
@@ -93,7 +95,7 @@ import Vue from "vue"
           infImgArr:[],
           IconNameArr:[],
           cc2:"",
-          cityPage21:{}
+          cityPage21:{},
         }
       },
       created(){
@@ -102,10 +104,10 @@ import Vue from "vue"
           // console.log(result.data);
           this.navArr0_7 = result.data.slice(0,8);
           this.navArr8_15 = result.data.slice(8,16);
-
+          this.navArr = result.data;
         }).catch((error)=>{
-          console.log(error)});
-
+          console.log(error)
+        });
         //  获取  商家信息
         Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762").then((result)=>{
           // console.log(result.data);
@@ -124,6 +126,12 @@ import Vue from "vue"
         }).catch((error)=>{
           console.log(error);
         });
+      },
+      methods:{
+        jump(title){
+          this.$router.push({path:"/sort",query:{navArr: title.title}});
+          this.home= null;
+        }
       }
     }
 </script>
@@ -138,6 +146,7 @@ import Vue from "vue"
     height:4rem;
     background-color: #3190e8;
     position:fixed;
+    z-index:100;
   }
   .search_img{
     color:white;
@@ -294,4 +303,5 @@ import Vue from "vue"
     display: inline-block;
     margin-bottom: 0.7rem;
   }
+
 </style>

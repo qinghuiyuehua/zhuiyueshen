@@ -95,7 +95,6 @@
          //    this.pageTwo1=asd;
          //  }
          //  console.log( this.pageTwo1,'数组是否存到值?');
-
         }
       }
     }
@@ -106,6 +105,7 @@
     width:100%;
     line-height:3.5rem;
     background-color: #3190e8;
+    z-index:100;
   }
   .arrow-left{
     color:white;
