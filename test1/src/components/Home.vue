@@ -4,7 +4,7 @@
       <!--头部-->
       <div class="head">
         <van-icon name="search" class="search_img"/>
-        <div class="address">地点</div>
+        <div class="address">{{cityPage21.name}}</div>
         <van-icon name="contact" class="user_img"/>
       </div>
 
@@ -92,20 +92,19 @@ import Vue from "vue"
           },
           infImgArr:[],
           IconNameArr:[],
+          cc2:"",
+          cityPage21:{}
         }
       },
       created(){
         //  获取  轮播图 信息
         Vue.axios.get("https://elm.cangdu.org/v2/index_entry").then((result)=>{
-          console.log(result.data);
+          // console.log(result.data);
           this.navArr0_7 = result.data.slice(0,8);
           this.navArr8_15 = result.data.slice(8,16);
-          result.data.forEach( v =>{
-            v.link;
-            console.log(v.link);
-          })
+
         }).catch((error)=>{
-          console.log(error)})
+          console.log(error)});
 
         //  获取  商家信息
         Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762").then((result)=>{
@@ -114,8 +113,17 @@ import Vue from "vue"
             this.infImgArr = result.data;
           })
         }).catch((error)=>{
-          console.log(error)})
-
+          console.log(error)});
+        let geo=localStorage.getItem('geohash');
+        this.cc2 = JSON.parse(geo);
+        // 动态获取城市名
+        let url2 = "https://elm.cangdu.org/v2/pois/"+this.cc2;
+        Vue.axios.get(url2).then((result)=>{
+          // console.log(result.data);
+          this.cityPage21=result.data;
+        }).catch((error)=>{
+          console.log(error);
+        });
       }
     }
 </script>
@@ -143,8 +151,12 @@ import Vue from "vue"
     font-size:2rem;
     position:absolute;
     top: 0.9rem;
-    left:14rem;
+    left:7rem;
     background-color: #3190e8;
+    width: 55%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .user_img{
     color:white;

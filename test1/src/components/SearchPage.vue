@@ -7,13 +7,12 @@
       @click-left="onClickLeft"
       @click-right="onClickRight"
     />
-    <form class="input">
-      <div>
+    <form action="" class="input" @submit.native.prevent>
+
         <input type="search" placeholder="输入学校、商务楼、地址" required="required" class="input_sea" v-model="pageOne">
-      </div>
-      <div>
+
         <input type="submit" value="提交" class="input_sub" @click="inputClick">
-      </div>
+
     </form>
     <search-history v-if="type10==='1'"></search-history>
     <search-result v-if="type10==='2'" :image9="cityPage2"></search-result>
@@ -47,20 +46,20 @@
       inputClick(){
         //  获取输入框数据,并根据输入框内容请求出搜索内容
         let url2 = "https://elm.cangdu.org/v1/pois?city_id="+this.cc1+"&keyword="+this.pageOne+"&type=search";
-        console.log(url2,'搜索城市的地址');
+        // console.log(url2,'搜索城市的地址');
         Vue.axios.get(url2).then((res)=>{
-          console.log(res.data,'根据搜索框获取相应的搜索内容');
+          // console.log(res.data,'根据搜索框获取相应的搜索内容');
           this.cityPage2=res.data;
           this.type10='2';
-          // this.$router.push({name:"n",params:{cityPage3:this.cityPage2}});
+          // console.log(this.cityPage2,'根据搜索框获取相应的搜索内容');
         }).catch((error)=>{
           console.log(error);
         });
-        console.log(this.type10,'3');
+        // console.log(this.type10,'3');
       }
     },
     mounted(){
-      console.log(this.$route.query.arrObj,'是否能收到第一页传来的id值');
+      // console.log(this.$route.query.arrObj,'是否能收到第一页传来的id值');
       this.cc1 = this.$route.query.arrObj;
       // 动态获取城市名
       let url1 = "https://elm.cangdu.org/v1/cities/"+this.cc1;
@@ -70,7 +69,6 @@
       }).catch((error)=>{
         console.log(error);
       });
-      console.log(this.type10,'1');
     }
   }
 </script>
@@ -91,6 +89,9 @@
     border-bottom: 1px solid #e4e4e4;
     padding-top: .5rem;
     margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+
   }
   .input_sub{
     background-color: #3190e8;
@@ -118,6 +119,35 @@
   }
 
   .van-ellipsis{
+    color: #fff;
+  }
+  .search{
+    background-color: #fff;
+  }
+  input[type=search]{
+    border-radius: 5px;
+    border: 1px solid #ebebeb;
+    width: 98%;
+    height: 30px;
+    outline: none;
+  }
+  /*input[type=search]::-webkit-input-placeholder{*/
+    /*color: blue;*/
+  /*}*/
+  input[type=search]::-webkit-search-cancel-button{
+    -webkit-appearance: none;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #EBEBEB;
+  }
+  input[type=search]::-webkit-search-cancel-button:after{
+    position: absolute;
+    content: 'x';
+    left: 25%;
+    top: -12%;
+    font-size: 20px;
     color: #fff;
   }
 </style>
