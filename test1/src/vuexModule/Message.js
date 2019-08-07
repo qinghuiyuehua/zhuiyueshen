@@ -4,10 +4,21 @@ const MessageModule = {
     flag:localStorage.getItem("flag")||"",
     //用户名
     message:localStorage.getItem("name")||"",
-    //新用户名
-    newName:localStorage.getItem("newName"),
+    //新增地址的所有信息
+    addaddress:localStorage.getItem("address")||"",
+    //编辑删除地址时的地址信息的更新
+    newaddress1:JSON.parse(localStorage.getItem("newaddress")),
   },
   mutations:{
+    clearUser(state){
+      //清除登录
+      state.flag = null;
+      state.message = null;
+
+      localStorage.removeItem("flag");
+      localStorage.removeItem("name");
+
+    },
     getFlag(state,msg){
       state.flag = msg;
       localStorage.setItem("flag",msg)
@@ -16,9 +27,17 @@ const MessageModule = {
       state.message = msg;
       localStorage.setItem("name",msg);
     },
-    getNewName(state,msg){
-      state.newName = msg;
-      localStorage.setItem("newName",msg)
+    updateMsg(state,msg){
+      state.message = msg;
+      localStorage.setItem("name",msg);
+    },
+    getAddress(state,msg){
+      state.addaddress = msg;
+      localStorage.setItem("address",msg);
+    },
+    getNewAddress(state,msg){
+      state.newaddress1 = msg;
+      localStorage.setItem("newaddress",JSON.stringify(msg));
     }
   }
 }
