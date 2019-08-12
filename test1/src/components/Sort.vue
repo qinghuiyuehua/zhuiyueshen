@@ -1,84 +1,86 @@
 <template>
-    <div class="sort">
-      <!--  头部  -->
-      <div class="head">
-        <van-icon name="arrow-left" class="arrow-left pull-left" @click="go_back" />
-        <span class="title_name">{{this.titleArr}}</span>
-      </div>
-      <!--  下拉头部  -->
-      <van-row class="two">
-        <van-col span="8" class="col_1">
-          <span  v-if="show_1" @click="threeArrow_1">{{this.titleArr}}</span>
-          <span style="color:blue"  @click="threeArrow_1" v-if="!show_1">分类</span>
-          <i :class="[threeRotate_1 ? 'el-icon-caret-bottom go_1' : 'el-icon-caret-bottom anti_1']"></i>
-        </van-col>
-        <van-col span="8" class="col_2">
-          <span @click="threeArrow_2" v-if="show_2">排序</span>
-          <span @click="threeArrow_2" style="color:blue"  v-if="!show_2">排序</span>
-          <i :class="[threeRotate_2 ? 'el-icon-caret-bottom go_2' : 'el-icon-caret-bottom anti_2']"></i>
-        </van-col>
-        <van-col span="8" class="col_3">
-          <span @click="threeArrow_3"  v-if="show_3">筛选</span>
-          <span @click="threeArrow_3" style="color:blue" v-if="!show_3">筛选</span>
-          <i :class="[threeRotate_3 ? 'el-icon-caret-bottom go_3' : 'el-icon-caret-bottom anti_3']"></i>
-        </van-col>
-      </van-row>
-      <div v-if="!dark" class="dark">
-      <!--  分类   左侧下拉框  -->
+  <div class="sort">
+    <!--  头部  -->
+    <div class="head">
+      <van-icon name="arrow-left" class="arrow-left pull-left" @click="go_back" />
+      <span class="title_name">{{this.titleArr}}</span>
+    </div>
+    <!--  下拉头部  -->
+    <van-row class="two">
+
+      <van-col span="8" class="col_1">
+        <span @click="threeArrow(1)" v-if="show_1" >{{this.titleArr}}</span>
+        <span style="color:blue" @click="threeArrow(1)" v-if="!show_1">分类</span>
+        <i :class="[!show_1 ? 'el-icon-caret-bottom go_1' : 'el-icon-caret-bottom anti_1']"></i>
+      </van-col>
+
+      <van-col span="8" class="col_2">
+        <span @click="threeArrow(2)" v-if="show_2">排序</span>
+        <span  style="color:blue" @click="threeArrow(2)" v-if="!show_2">排序</span>
+        <i :class="[!show_2 ? 'el-icon-caret-bottom go_2' : 'el-icon-caret-bottom anti_2']"></i>
+      </van-col>
+
+      <van-col span="8" class="col_3">
+        <span @click="threeArrow(3)" v-if="show_3">筛选</span>
+        <span  style="color:blue" @click="threeArrow(3)" v-if="!show_3">筛选</span>
+        <i :class="[!show_3 ? 'el-icon-caret-bottom go_3' : 'el-icon-caret-bottom anti_3']"></i>
+      </van-col>
+    </van-row>
+      <!--  分类下拉框  -->
         <van-row v-if="!show_1" class="drop_down_list">
+          <!--  左侧下拉框 -->
           <van-col span="12" class="left_12">
             <span class="foreign_name">异国料理</span>
             <span class="pull-right foreign_count sort_count">{{sortCountOne}}</span>
-            <ul v-for="(v,index) in sortList">
-              <li class="sortList_left">
-                <img src="https://fuss10.elemecdn.com/b/ff/533cf9617bd57fe1dfb05603bebcfpng.png"class="sort_img">
-                {{v.name}}
+            <ul v-for="(leftV,index) in sortList">
+              <li class="sortList_left" :class="{changeStyle:key == leftV.name}" @click="selectTitle(leftV.name)">
+                <img :src="getImgPath(leftV.image_url)"class="sort_img">
+                {{leftV.name}}
                 <van-icon name="arrow" class="pull-right sort_arrow"/>
-                <span class="pull-right sort_count">{{v.count}}</span>
+                <span class="pull-right sort_count">{{leftV.count}}</span>
               </li>
             </ul>
           </van-col>
           <!--  分类   右侧下拉框  -->
           <van-col span="12" class="right_12">
-            <ul >
-              <li class="down_right" v-for="(v,index) in downRight">
-                <span >{{v.name}}</span>
-                <span class="pull-right">{{v.count}}</span>
+            <ul v-for="(left,index) in rightArr">
+              <li class="down_right" v-for="(a,index) in left.sub_categories.slice(1)">
+                <span >{{a.name}}</span>
+                <span class="pull-right">{{a.count}}</span>
               </li>
             </ul>
           </van-col>
         </van-row>
-
       <!--  排序下拉框  -->
-        <div  v-if="!show_2" class="drop_down_sort" >
-          <ul>
-            <li>
-              <i class="el-icon-sort"></i>
-              <span>智能排序</span>
-            </li>
-            <li>
-              <i class="el-icon-location-outline"></i>
-              <span>距离最近</span>
-            </li>
-            <li>
-              <van-icon name="fire-o" class="fire-o" />
-              <span>销量最高</span>
-            </li>
-            <li>
-              <van-icon name="after-sale" class="after-sale" />
-              <span>起送价最低</span>
-            </li>
-            <li>
-              <i class="el-icon-time"></i>
-              <span>配送速度最快</span>
-            </li>
-            <li>
-              <i class="el-icon-star-off"></i>
-              <span>评分最高</span>
-            </li>
-          </ul>
+      <div  v-if="!show_2" class="drop_down_sort">
+        <ul>
+          <li >
+            <i class="el-icon-sort"></i>
+            <span>智能排序</span>
+          </li>
+          <li>
+            <i class="el-icon-location-outline"></i>
+            <span>距离最近</span>
+          </li>
+          <li @click="sortSelect(3)">
+            <van-icon name="fire-o" class="fire-o"/>
+            <span>销量最高</span>
+          </li>
+          <li >
+            <van-icon name="after-sale" class="after-sale" />
+            <span>起送价最低</span>
+          </li>
+          <li >
+            <i class="el-icon-time"></i>
+            <span>配送速度最快</span>
+          </li>
+          <li >
+            <i class="el-icon-star-off"></i>
+            <span>评分最高</span>
+          </li>
+        </ul>
 
-        </div>
+      </div>
       <!--  筛选下拉框 -->
       <div   v-if="!show_3"  class="screen">
         <div class="screen_top">
@@ -151,156 +153,180 @@
               <van-button type="primary" class="sure">确定</van-button>
             </van-col>
           </van-row>
-
         </div>
+      </div>
+    <!--   三个下拉框的 黑色透明背景   -->
+    <van-overlay :show="show" @click="overlay"/>
 
-      </div>
-      </div>
-      <!--  商品列表  -->
-        <div class="inf" >
-          <van-row>
-            <a href="###" class="infA" v-for="(img,index) in infImgArr">
-              <!--第一行-->
-              <img class="infImg pull-left" :src="'http://elm.cangdu.org/img/'+ img.image_path">
-              <span class="infBrand">品牌</span>
-              <span class="infName">{{img.name}}</span>
-              <span class="bzp pull-right">票</span>
-              <span class="bzp pull-right">准</span>
-              <span class="bzp pull-right">保</span>
-              <br>
-              <!--第二行-->
-              <van-rate class="star"
-                        v-model="img.rating"
-                        size="1"
-                        readonly
-                        score-template="{value}">
-              </van-rate>
-              <span class="rating">{{img.rating}}</span>
-              <span class="recent_order_num">月售{{img.recent_order_num}}单</span>
-              <span class="zsd pull-right">准时达</span>
-              <span class="delivery_mode_text pull-right">{{img.delivery_mode.text}}</span>
-              <br>
-              <!--第三行-->
-              <span class="float_minimum_order_amount">￥{{img.float_minimum_order_amount}}起送/配送费约￥{{img.float_delivery_fee}}</span>
-              <span class="forty_minute pull-right"> 40分钟</span>
-              <span class="ten_km pull-right">10公里 /</span>
-            </a>
-          </van-row>
+    <!--  商品列表  -->
+    <div class="inf">
+      <van-row>
+        <div  class="infA" v-for="(img,index) in infImgArr">
+          <!--第一行-->
+          <img class="infImg pull-left" :src="'http://elm.cangdu.org/img/'+ img.image_path">
+          <span class="infBrand">品牌</span>
+          <span class="infName">{{img.name}}</span>
+          <span class="bzp pull-right">{{supportsArr2.icon_name}}</span>
+          <span class="bzp pull-right">{{supportsArr1.icon_name}}</span>
+          <span class="bzp pull-right">{{supportsArr0.icon_name}}</span>
+
+
+          <br>
+          <!--第二行-->
+          <van-rate class="star"
+                    v-model="img.rating"
+                    size="1"
+                    readonly
+                    score-template="{value}">
+          </van-rate>
+          <span class="rating">{{img.rating}}</span>
+          <span class="recent_order_num">月售{{img.recent_order_num}}单</span>
+          <span class="zsd pull-right">准时达</span>
+          <span class="delivery_mode_text pull-right">{{img.delivery_mode.text}}</span>
+          <br>
+          <!--第三行-->
+          <span class="float_minimum_order_amount">￥{{img.float_minimum_order_amount}}起送/配送费约￥{{img.float_delivery_fee}}</span>
+          <span class="forty_minute pull-right"> {{img.order_lead_time}}</span>
+          <span class="ten_km pull-right">{{img.distance}}/</span>
         </div>
-
+      </van-row>
     </div>
+  </div>
 </template>
 <script>
   import Vue from "vue"
-    export default {
-      name: "Sort",
-      data(){
-        return{
-          titleArr:[],
-          threeRotate_1: false,
-          threeRotate_2: false,
-          threeRotate_3: false,
-          dark:true,
-          show_1:true,
-          show_2:true,
-          show_3:true,
-          sortCountOne:[],
-          sortList:[],
-          infImgArr:[],
-          downRight:[],
+  export default {
+    name: "Sort",
+    data(){
+      return{
+        supportsArr0: '',
+        supportsArr1: '',
+        supportsArr2: '',
+        titleArr:[],
+        show: false,
+        show_1:true,
+        show_2:true,
+        show_3:true,
+        dropDownSortSelect:[],
+        sortCountOne:[],
+        sortList:[],
+        infImgArr:[],
+        rightArr:[],
+        key:'',
+      }
+    },
+    methods:{
+      //   获取分类的  左下拉框的图标
+      getImgPath(v){
+        //传递过来的图片地址需要处理后才能正常使用
+        let suffix;
+        if (!v) {
+          return '//elm.cangdu.org/img/default.jpg'
         }
-      },
-      methods:{
-        //  当前只显示1个下拉列表
-        threeArrow_1() {
-          if (!this.threeRotate_1, !this.show_1){
-            this.threeRotate_1 = false;
-            this.show_1 = true;
-            this.dark = true;
-          }else {
-            this.threeRotate_1 = true;
-            this.show_1 = false;
-            this.threeRotate_2 = false;
-            this.show_2 = true;
-            this.threeRotate_3 = false;
-            this.show_3 = true;
-            this.dark = false;
-          }
-        },
-        threeArrow_2() {
-          if (!this.threeRotate_2, !this.show_2){
-            this.threeRotate_2 = false;
-            this.show_2 = true;
-            this.dark = true;
-          }else {
-            this.threeRotate_2 = true;
-            this.show_2 = false;
-            this.threeRotate_1 = false;
-            this.show_1 = true;
-            this.threeRotate_3 = false;
-            this.show_3 = true;
-            this.dark = false;
-          }
-        },
-        threeArrow_3() {
-          if (!this.threeRotate_3, !this.show_3){
-            this.threeRotate_3 = false;
-            this.show_3 = true;
-            this.dark = true;
-          }else {
-            this.threeRotate_3 = true;
-            this.show_3 = false;
-            this.threeRotate_2 = false;
-            this.show_2 = true;
-            this.threeRotate_1 = false;
-            this.show_1 = true;
-            this.dark = false;
-          }
-        },
-        //  点击左上角箭头，返回外卖页面
-        go_back(){
-          this.$router.push({path:"/home"});
+        if (v.indexOf('jpeg') !== -1) {
+          suffix = '.jpeg'
+        } else {
+          suffix = '.png'
         }
+        let url = '/' + v.substr(0, 1) + '/' + v.substr(1, 2) + '/' + v.substr(3) + suffix;
+        return 'https://fuss10.elemecdn.com' + url
       },
-      created(){
-      //  16个分类，每一个分类名字
-        this.titleArr = this.$route.query.navArr;
-      //  下拉列表
-        Vue.axios.get("https://elm.cangdu.org/shopping/v2/restaurant/category").then((result)=>{
-          // console.log(result.data);
-          //  获取 异国料理的 count
-          this.sortCountOne = result.data.slice(0,1)[0].count;
-          // console.log(this.sortCountOne);
-          this.sortList = result.data.slice(1,9);
+      //   点击黑色透明背景，让黑色背景，下拉框消失
+      overlay(){
+        this.show = false;
+        this.show_1 = true;
+        this.show_2 = true;
+        this.show_3 = true;
+      },
+      //  当前只显示1个下拉列表
+      threeArrow(v) {
+        if (v == 1){
+          this.show_1 = !this.show_1;
+          this.show_2 = true;
+          this.show_3 = true;
+          this.show = true;
+          if (this.show_1) {
+            this.show =false;
+          }
+        }
+        else if(v == 2){
+          this.show_2 = !this.show_2;
+          this.show_1 = true;
+          this.show_3 = true;
+          this.show = true;
+          if (this.show_2) {
+            this.show =false;
+          }
+        }
+        else {
+          this.show_3 = !this.show_3;
+          this.show_2 = true;
+          this.show_1 = true;
+          this.show = true;
+          if (this.show_3) {
+            this.show =false;
+          }
+        }
 
-          result.data.forEach( v => {
-            // console.log(v.id);
-            // console.log(v.name);
-
-            v.sub_categories.forEach( s =>{
-              // console.log(s.id);
-              // console.log(s.name);
-            });
-            // console.log("0000000000000000000");
-          })
-        }).catch((error)=>{
-          console.log(error);
+      },
+      //  点击左上角箭头，返回外卖页面
+      go_back(){
+        this.$router.push({path:"/home"});
+      },
+      //   分类下拉框中，点击左侧名称，右侧显示对应内容, key是改变 li 背景的标识(在data中定义)
+      selectTitle(leftName){
+        this.key = leftName;
+        this.rightArr = this.sortList.filter((m) => {
+          return m.name === leftName;
         });
-
-        //  获取  商家信息
-        Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762").then((result)=>{
-          // console.log(result.data);
-          result.data.forEach( v => {
-            this.infImgArr = result.data;
-          })
-        }).catch((error)=>{
-          console.log(error)})
       },
-    }
+    },
+    created(){
+      // this.show = !this.show;
+      //  16个分类，每一个分类名字
+      this.titleArr = this.$route.query.navArrTitle;
+      //  下拉列表
+      Vue.axios.get("https://elm.cangdu.org/shopping/v2/restaurant/category").then((result)=>{
+
+        //  获取 异国料理的 count
+        this.sortCountOne = result.data.slice(0,1)[0].count;
+        this.sortList = result.data.slice(1,9);
+        console.log(this.sortList.slice(0,8));
+      }).catch((error)=>{
+        console.log(error);
+      });
+
+      //  获取  商家信息
+      Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762").then((result)=>{
+        // console.log(result.data);
+        this.infImgArr = result.data;
+        result.data.forEach( v=>{
+          this.supportsArr0 = v.supports[0];
+          this.supportsArr1 = v.supports[1];
+          this.supportsArr2 = v.supports[2];
+        })
+      }).catch((error)=>{
+        console.log(error)});
+
+      //   智能排序  排序
+      Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762&order_by=4").then((result)=>{
+        // console.log(result.data);
+        this.dropDownSortSelect = result.data;
+      }).catch((error)=>{
+        console.log(error);
+      });
+    },
+  }
 </script>
 
 <style scoped>
-    /*  头部  */
+  .changeStyle{
+    background: white;
+  }
+  .sort{
+    margin-bottom: 4rem;
+  }
+  /*  头部  */
   .head{
     background-color: #3190e8;
     position: fixed;
@@ -327,7 +353,6 @@
     line-height: 4rem;
     margin-left: -2.5rem;
   }
-
   /*  三个下拉框  */
   .two{
     text-align: center;
@@ -355,16 +380,16 @@
     transition: all 0.3s;
   }
   /*  分类下拉框  */
-    .drop_down_list{
-      margin-top: 7.1rem;
-      animation: fadeInDown 0.2s linear forwards;
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      position: fixed;
-      z-index: 9;
-    }
+  .drop_down_list{
+    margin-top: 7.1rem;
+    animation: fadeInDown 0.25s linear forwards;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    position: fixed;
+    z-index: 9;
+  }
   .left_12{
     background: #f5f5f5;
   }
@@ -408,6 +433,7 @@
   .right_12{
     background: white;
     height: 31rem;
+    overflow-y: scroll;
   }
   .down_right{
     font-size: 1.3rem;
@@ -418,219 +444,220 @@
   }
 
   .dark{
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 8;
-  background-color: rgba(0,0,0,0.3);
-}
-    /*  排序下拉框*/
-    .drop_down_sort{
-      animation: fadeInDown 0.2s linear forwards;
-      margin-top: 6.5rem;
-      background: white;
-      position: fixed;
-      z-index: 9;
-      line-height: 5rem;
-      width: 100%;
-      padding-left: 4rem;
-    }
-    .drop_down_sort > ul > li{
-      border-bottom: 0.05rem solid gainsboro;
-      width:100%;
-    }
-    /*  图标大小、颜色*/
-    .drop_down_sort > ul > li > i{
-      font-size: 1.7rem;
-      padding-right:2rem;
-    }
-    .el-icon-sort, .el-icon-location-outline{
-      color: rgb(42, 155, 211);
-    }
-    .fire-o {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+    background-color: rgba(0,0,0,0.3);
+  }
+  /*  排序下拉框*/
+  .drop_down_sort{
+    animation: fadeInDown 0.25s linear forwards;
+    margin-top: 6.5rem;
+    background: white;
+    position: fixed;
+    z-index: 9;
+    line-height: 5rem;
+    width: 100%;
+    padding-left: 4rem;
+  }
+  .drop_down_sort > ul > li{
+    border-bottom: 0.05rem solid gainsboro;
+    width:100%;
+  }
+  /*  图标大小、颜色*/
+  .drop_down_sort > ul > li > i{
+    font-size: 1.7rem;
+    padding-right:2rem;
+  }
+  .el-icon-sort, .el-icon-location-outline{
+    color: rgb(42, 155, 211);
+  }
+  .fire-o {
     color: rgb(240, 115, 115);
-    }
-    .after-sale {
-      color: rgb(230, 182, 26);
-    }
-    .el-icon-time {
-      color: rgb(55, 199, 183);
-    }
-    .el-icon-star-off {
-      color: rgb(235, 165, 59);
-    }
-    .drop_down_sort > li > span{
-      color: #666;
-    }
+  }
+  .after-sale {
+    color: rgb(230, 182, 26);
+  }
+  .el-icon-time {
+    color: rgb(55, 199, 183);
+  }
+  .el-icon-star-off {
+    color: rgb(235, 165, 59);
+  }
+  .drop_down_sort > li > span{
+    color: #666;
+  }
 
-    /*  筛选下拉框  */
-    .screen{
-      animation: fadeInDown 0.2s linear forwards;
-      margin-top: 6.5rem;
-      position: fixed;
-      z-index: 10;
-      background: gainsboro;
-      font-size: 1rem;
-    }
-    .screen_btn{
-      border: 0.11rem solid #eee;
-      padding-left: 1rem;
-      line-height: 3rem;
-      height: 3rem;
-      width: 9.5rem;
-      margin: 1rem 1.5rem 1rem 0;
-      background: white;
-    }
-    .btn_6{
-      margin-bottom: -1rem;
-    }
+  /*  筛选下拉框  */
+  .screen{
+    animation: fadeInDown 0.25s linear forwards;
+    margin-top: 6.5rem;
+    position: fixed;
+    z-index: 9;
+    background: gainsboro;
+    font-size: 1rem;
+  }
+  .screen_btn{
+    border: 0.11rem solid #eee;
+    padding-left: 1rem;
+    line-height: 3rem;
+    height: 3rem;
+    width: 9.5rem;
+    margin: 1rem 1.5rem 1rem 0;
+    background: white;
+  }
+  .btn_6{
+    margin-bottom: -1rem;
+  }
 
-    .pin,.bao,.zhun,.xin,.fu,.piao{
-      border: 0.115rem solid;
-      border-radius: 0.25rem;
-      margin-right: 0.2rem;
-      font-size: 1rem;
-      padding: 0.2rem 0.2rem 0rem 0.2rem;
-      /*margin-left: -2rem;*/
-    }
-    .pin{
-      color: rgb(63, 189, 230);
-      border-color: rgb(63, 189, 230);
-    }
-    .bao{
-      color: rgb(153, 153, 153);
-      border-color: rgb(153, 153, 153);
-    }
-    .zhun{
-      color: rgb(87, 169, 255);
-      border-color: rgb(87, 169, 255);
-    }
-    .xin{
-      color: rgb(232, 132, 45);
-      border-color: rgb(232, 132, 45);
-    }
-    .fu{
-      color: rgb(255, 78, 0);
-      border-color: rgb(255, 78, 0);
-    }
-    .piao{
-      color: rgb(153, 153, 153);
-      border-color: rgb(153, 153, 153);
-    }
-    /*  清空 和 确定按钮CSS  */
-    .screen_top{
-      background: white;
-      width: 100%;
-      height: 18rem;
-      padding: 1rem 0 0 1rem;
-    }
-    .clear, .sure{
-      width: 95%;
-      margin: 0.5rem 0 0.5rem 0.25rem;
-      border-radius: 0.5rem;
-      font-size: 2rem;
-      font-weight: 300;
-    }
+  .pin,.bao,.zhun,.xin,.fu,.piao{
+    border: 0.115rem solid;
+    border-radius: 0.25rem;
+    margin-right: 0.2rem;
+    font-size: 1rem;
+    padding: 0.2rem 0.2rem 0rem 0.2rem;
+    /*margin-left: -2rem;*/
+  }
+  .pin{
+    color: rgb(63, 189, 230);
+    border-color: rgb(63, 189, 230);
+  }
+  .bao{
+    color: rgb(153, 153, 153);
+    border-color: rgb(153, 153, 153);
+  }
+  .zhun{
+    color: rgb(87, 169, 255);
+    border-color: rgb(87, 169, 255);
+  }
+  .xin{
+    color: rgb(232, 132, 45);
+    border-color: rgb(232, 132, 45);
+  }
+  .fu{
+    color: rgb(255, 78, 0);
+    border-color: rgb(255, 78, 0);
+  }
+  .piao{
+    color: rgb(153, 153, 153);
+    border-color: rgb(153, 153, 153);
+  }
+  /*  清空 和 确定按钮CSS  */
+  .screen_top{
+    background: white;
+    width: 100%;
+    height: 18rem;
+    padding: 1rem 0 0 1rem;
+  }
+  .clear, .sure{
+    width: 95%;
+    margin: 0.5rem 0 0.5rem 0.25rem;
+    border-radius: 0.5rem;
+    font-size: 2rem;
+    font-weight: 300;
+  }
+  .clear_sure{
+    z-index: 10;
+  }
 
-    .clear_sure{
-      z-index: 10;
-    }
-    /*  商家 信息*/
-    .inf{
-      padding-top: 7rem;
-    }
-    /* 第一行*/
-    .infA{
-      display: block;
-      border-bottom: 0.05rem solid gainsboro;
-      height: 8rem;
-      padding: 1.5rem 0.7rem 8rem 0.7rem;
-    }
-    .infImg{
-      width: 5.5rem;
-      height: 5.5rem;
-      margin-right: 1rem;
-    }
-    .infBrand{
-      display: inline-block;
-      font-size: 0.5rem;
-      font-weight:600;
-      line-height: 1.2rem;
-      color: #333;
-      background-color: #ffd930;
-      border-radius: 0.2rem;
-      margin-right: 0.2rem;
-      width: 2.3rem;
-      text-align: center;
-    }
-    .infName{
-      color: #333;
-      padding-top: 0.01rem;
-      font-weight: 700;
-    }
-    .bzp{
-      font-size: 0.5rem;
-      color: #999;
-      border: 0.1rem solid #f1f1f1;
-      padding: 0 .04rem;
-      border-radius: 0.1rem;
-      font-weight: 400;
-    }
+  /*  商家 信息*/
+  .inf{
+    padding-top: 7rem;
+  }
+  /* 第一行*/
+  .infA{
+    display: block;
+    border-bottom: 0.05rem solid gainsboro;
+    height: 8rem;
+    padding: 1.5rem 0.7rem 8rem 0.7rem;
+  }
+  .infImg{
+    width: 5.5rem;
+    height: 5.5rem;
+    margin-right: 1rem;
+  }
+  .infBrand{
+    display: inline-block;
+    font-size: 0.5rem;
+    font-weight:600;
+    line-height: 1.2rem;
+    color: #333;
+    background-color: #ffd930;
+    border-radius: 0.2rem;
+    margin-right: 0.2rem;
+    width: 2.3rem;
+    text-align: center;
+  }
+  .infName{
+    color: #333;
+    padding-top: 0.01rem;
+    font-weight: 700;
+  }
+  .bzp{
+    font-size: 0.5rem;
+    color: #999;
+    border: 0.1rem solid #f1f1f1;
+    padding: 0.1rem 0.04rem 0 0.04rem;
+    line-height: 1rem;
+    border-radius: 0.2rem;
+    font-weight: 400;
+  }
 
-    /*  第二行 */
-    .star{
-      display: inline-block;
-      font-size: 0.4rem;
-    }
-    .rating{
-      font-size: 0.4rem;
-      color: #ff9a0d;;
-      margin: 0 0.2rem;
-    }
-    .recent_order_num{
-      font-size: 0.1rem;
-      transform: scale(0.9);
-      color: #666;
-    }
-    .delivery_mode_text{
-      color: #fff;
-      background-color: #3190e8;
-      border: 0.025rem solid #3190e8;
-      font-size: 0.05rem;
-      font-weight: 400;
-      transform: scale(0.7);
-      padding: 0.2rem 0.1rem 0;
-      border-radius: 0.2rem;
-      margin-right: -1rem;
-    }
-    .zsd{
-      color: #3190e8;
-      border: 0.05rem solid #3190e8;
-      font-weight: 400;
-      transform: scale(0.7);
-      border-radius: 0.2rem;
-      padding: 0.1rem 0.1rem 0;
-      font-size: 0.1rem;
-    }
+  /*  第二行 */
+  .star{
+    display: inline-block;
+    font-size: 0.4rem;
+  }
+  .rating{
+    font-size: 0.4rem;
+    color: #ff9a0d;;
+    margin: 0 0.2rem;
+  }
+  .recent_order_num{
+    font-size: 0.1rem;
+    transform: scale(0.9);
+    color: #666;
+  }
+  .delivery_mode_text{
+    color: #fff;
+    background-color: #3190e8;
+    border: 0.025rem solid #3190e8;
+    font-size: 0.05rem;
+    font-weight: 400;
+    transform: scale(0.7);
+    padding: 0.2rem 0.1rem 0;
+    border-radius: 0.2rem;
+    margin-right: -1rem;
+  }
+  .zsd{
+    color: #3190e8;
+    border: 0.05rem solid #3190e8;
+    font-weight: 400;
+    transform: scale(0.7);
+    border-radius: 0.2rem;
+    padding: 0.1rem 0.1rem 0;
+    font-size: 0.1rem;
+  }
 
-    /*  第三行 */
-    .float_minimum_order_amount{
-      font-size: 1rem;
-      color: #666;
-      line-height: 1rem;
-    }
-    .ten_km{
-      font-size: 1rem;
-      margin-top: 0.07rem;
-      color: #666;
-    }
-    .forty_minute{
-      font-size: 1rem;
-      margin-top: 0.07rem;
-    }
-    .infA > span{
-      display: inline-block;
-      margin-bottom: 0.7rem;
-    }
+  /*  第三行 */
+  .float_minimum_order_amount{
+    font-size: 1rem;
+    color: #666;
+    line-height: 1rem;
+  }
+  .ten_km{
+    font-size: 1rem;
+    margin-top: 0.07rem;
+    color: #666;
+  }
+  .forty_minute{
+    font-size: 1rem;
+    margin-top: 0.07rem;
+  }
+  .infA > span{
+    display: inline-block;
+    margin-bottom: 0.7rem;
+  }
 
 </style>

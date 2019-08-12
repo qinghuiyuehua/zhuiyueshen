@@ -71,6 +71,10 @@
 </script>
 
 <style scoped>
+  .find{
+    background: #f5f5f5;
+    height: 100%;
+  }
   .head{
     width:100%;
     line-height:3.5rem;
@@ -91,7 +95,6 @@
   }
 
   .input_btn{
-    width:100%;
     line-height:3.8rem;
     background:white;
     text-align: center;

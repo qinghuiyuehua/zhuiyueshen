@@ -1,35 +1,44 @@
 <template>
     <div class="order">
-      <div class="head">
-        <i class="el-icon-arrow-left arrow-left"></i>
-        <span class="order_title">订单列表</span>
+      <!--  头部  -->
+      <div class="first_line">
+        <van-icon name="arrow-left" class="arrow-left pull-left" @click="goBack()"/>
+        <span class="title_name">订单列表</span>
       </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "Order"
+      name: "Order",
+      methods:{
+        goBack(){
+          window.history.go(-1);
+        }
+      }
     }
 </script>
 
 <style scoped>
-  .head{
-    width:100%;
-    line-height:3.5rem;
-    background-color: #3190e8;
-    z-index:100;
+  .order{
+    background: #f5f5f5;
+    width: 100%;
+    height: 100%;
+  }
+  .first_line{
+    line-height: 4rem;
+    text-align: center;
+    background: #3190e8;
+    width: 100%;
   }
   .arrow-left{
-    color:white;
-    font-size:1.5rem;
-    margin: 0.8rem 0 0 1rem;
-    background-color: #3190e8;
+    line-height: 4rem;
+    color: white;
+    font-size: 2.3rem;
   }
-  .order_title{
-    color:white;
-    font-size:1.5rem;
-    margin: 0.8rem 0 0 8rem;
-    background-color: #3190e8;
+  .title_name{
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
   }
 </style>

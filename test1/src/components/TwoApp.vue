@@ -1,7 +1,9 @@
 <template>
     <div class="two_app">
       <Nav></Nav>
+      <transition enter-active-class="animated fadeIn" leave-active-class="opacity 0" >
       <router-view></router-view>
+      </transition>
     </div>
 </template>
 
@@ -14,5 +16,8 @@
 </script>
 
 <style scoped>
+  .two_app{
+    height: 100%;
+  }
 
 </style>

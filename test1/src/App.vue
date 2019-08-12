@@ -8,14 +8,9 @@
   import "../node_modules/bootstrap/dist/css/bootstrap.css"
   import "../node_modules/animate.css/animate.css"
 
-  import City from "./components/city";
-  import Login from "./components/login";
-  import Person from "./components/Person";
-  import UpdateName from "./components/UpdateName";
-  import TwoApp from "./components/TwoApp";
 export default {
   name: 'App',
-  components: {TwoApp, Login, City,Person,UpdateName},
+  components: {},
 
 }
 </script>
@@ -30,6 +25,14 @@ export default {
     padding: 0;
     text-decoration: none;
   }
+  li{
+    list-style: none;
+  }
+
+  body,html{
+   width: 100%;
+   height: 100%;
+ }
 #app {
   width: 100%;
   height: 100%;
@@ -38,4 +41,5 @@ export default {
     width: 100%;
     height: 100%;
   }
+
 </style>
