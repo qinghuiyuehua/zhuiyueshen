@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <!--<transition enter-active-class="animated fadeIn" leave-active-class="opacity 0" >-->
     <router-view></router-view>
-    <!--</transition>-->
   </div>
 </template>
 
@@ -35,7 +33,12 @@ export default {
    width: 100%;
    height: 100%;
  }
-  #app{
+#app {
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+  html,body{
     width: 100%;
     height: 100%;
   }
