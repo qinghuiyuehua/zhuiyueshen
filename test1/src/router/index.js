@@ -20,6 +20,8 @@ import Order from "../components/Order"
 import Mine from "../components/Mine"
 import Sort from "../components/Sort"
 import Nav from "../components/Nav"
+import BusinessInformation from "../components/BusinessInformation"
+import BusinessDetails from "../components/BusinessDetails"
 
 export default new Router({
   routes: [
@@ -47,5 +49,7 @@ export default new Router({
     {path:"/addaddress",component:AddAddress,name:"addaddress"},
     {path:"/searchaddress",component:SearchAddress,name:"searchaddress"},
     {path:"/updatepassword",component:UpdatePassword,name:"updatepassword"},
+    {path:"/BusinessInformation",component:BusinessInformation},
+    {path:"/BusinessDetails",component:BusinessDetails}
   ]
 })

@@ -45,9 +45,7 @@
           <span class="icon_word">附近商家</span>
         </div>
         <div class="inf" >
-
-          <van-row>
-            <a href="###" class="infA" v-for="img in infImgArr">
+            <div class="infA" v-for="img in infImgArr" @click="click21(img)">
               <!--第一行-->
             <img class="infImg pull-left" :src="'http://elm.cangdu.org/img/'+ img.image_path">
             <span class="infBrand">品牌</span>
@@ -72,8 +70,7 @@
               <span class="float_minimum_order_amount">￥{{img.float_minimum_order_amount}}起送/配送费约￥{{img.float_delivery_fee}}</span>
               <span class="forty_minute pull-right"> 40分钟</span>
               <span class="ten_km pull-right">10公里 /</span>
-            </a>
-          </van-row>
+            </div>
         </div>
       </div>
     </div>
@@ -110,7 +107,7 @@ import Vue from "vue"
         });
         //  获取  商家信息
         Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762").then((result)=>{
-          // console.log(result.data);
+          console.log(result.data.id);
           result.data.forEach( v => {
             this.infImgArr = result.data;
           })
@@ -131,6 +128,9 @@ import Vue from "vue"
         jump(title){
           this.$router.push({path:"/sort",query:{navArr: title.title}});
           this.home= null;
+        },
+        click21(v){
+          this.$router.push({path:"/BusinessInformation",query:{id: v.id}});
         }
       }
     }
@@ -210,6 +210,9 @@ import Vue from "vue"
   .icon_img,.icon_word{
     line-height: 3rem;
     vertical-align: middle;
+  }
+  .inf{
+    margin-bottom: 3rem;
   }
   .infA{
     display:block;
