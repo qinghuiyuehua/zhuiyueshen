@@ -4,7 +4,7 @@
 
         <span span="6">
         <router-link :to="{path:'/home'}">
-            <a href="###" class="home_p el-icon-eleme" :class="{changeStyle:key == 1}" @click="changeBtn(1)" >
+            <a href="###" class="home_p el-icon-eleme" :class="{changeStyle:key == 1}" @click="changeBtn(1)">
             <p>外卖</p>
             </a>
         </router-link>
@@ -47,8 +47,8 @@
         }
       },
       methods:{
-        changeBtn(id) {
-          this.key = id;
+        changeBtn(num) {
+          this.key = num;
         }
       },
       //  外卖页面显示时，给外卖图标设置颜色

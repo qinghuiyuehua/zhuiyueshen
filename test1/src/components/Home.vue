@@ -47,14 +47,14 @@
         <div class="inf" >
 
           <van-row>
-            <a href="###" class="infA" v-for="img in infImgArr">
+            <div class="infA" v-for="img in infImgArr">
               <!--第一行-->
             <img class="infImg pull-left" :src="'http://elm.cangdu.org/img/'+ img.image_path">
             <span class="infBrand">品牌</span>
             <span class="infName">{{img.name}}</span>
-            <span class="bzp pull-right">票</span>
-            <span class="bzp pull-right">准</span>
-            <span class="bzp pull-right">保</span>
+            <span class="bzp pull-right">{{supportsArr2.icon_name}}</span>
+            <span class="bzp pull-right">{{supportsArr1.icon_name}}</span>
+            <span class="bzp pull-right">{{supportsArr0.icon_name}}</span>
             <br>
               <!--第二行-->
               <van-rate class="star"
@@ -70,9 +70,9 @@
             <br>
             <!--第三行-->
               <span class="float_minimum_order_amount">￥{{img.float_minimum_order_amount}}起送/配送费约￥{{img.float_delivery_fee}}</span>
-              <span class="forty_minute pull-right"> 40分钟</span>
-              <span class="ten_km pull-right">10公里 /</span>
-            </a>
+              <span class="forty_minute pull-right">{{img.order_lead_time}}</span>
+              <span class="ten_km pull-right">{{img.distance}} /</span>
+            </div>
           </van-row>
         </div>
       </div>
@@ -87,12 +87,15 @@ import Vue from "vue"
         return{
           navArr0_7: [],
           navArr8_15: [],
-          navArr: [],
+          navArrTitle: [],
           swiperOption: {
             pagination: '.swiper-pagination',
             loop: true,
           },
           infImgArr: [],
+          supportsArr0: '',
+          supportsArr1: '',
+          supportsArr2: '',
         }
       },
       created(){
@@ -101,32 +104,32 @@ import Vue from "vue"
           // console.log(result.data);
           this.navArr0_7 = result.data.slice(0,8);
           this.navArr8_15 = result.data.slice(8,16);
-          this.navArr = result.data;
         }).catch((error)=>{
           console.log(error)})
 
         //  获取  商家信息
         Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762").then((result)=>{
           // console.log(result.data);
-          result.data.forEach( v => {
             this.infImgArr = result.data;
+          result.data.forEach( v=>{
+            // console.log(v.distance);
+            this.supportsArr0 = v.supports[0];
+            this.supportsArr1 = v.supports[1];
+            this.supportsArr2 = v.supports[2];
           })
         }).catch((error)=>{
           console.log(error)})
       },
       methods:{
         jump(title){
-          this.$router.push({path:"/sort",query:{navArr: title.title}});
-          this.home= null;
+          this.$router.push({path:"/sort",query:{navArrTitle: title.title}
+          });
         }
       }
     }
 </script>
 
 <style scoped>
-  a{
-    text-decoration:none;
-  }
   /* 头部 CSS */
   .head{
     width:100%;
@@ -193,6 +196,9 @@ import Vue from "vue"
   .icon_img,.icon_word{
     line-height: 3rem;
     vertical-align: middle;
+  }
+  .inf{
+    margin-bottom: 3rem;
   }
   .infA{
     display:block;

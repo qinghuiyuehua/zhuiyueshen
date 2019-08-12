@@ -1,6 +1,8 @@
 <template>
   <div id="app">
+    <!--<transition enter-active-class="animated fadeIn" leave-active-class="opacity 0" >-->
     <router-view></router-view>
+    <!--</transition>-->
   </div>
 </template>
 
@@ -8,14 +10,9 @@
   import "../node_modules/bootstrap/dist/css/bootstrap.css"
   import "../node_modules/animate.css/animate.css"
 
-  import City from "./components/city";
-  import Login from "./components/login";
-  import Person from "./components/Person";
-  import UpdateName from "./components/UpdateName";
-  import TwoApp from "./components/TwoApp";
 export default {
   name: 'App',
-  components: {TwoApp, Login, City,Person,UpdateName},
+  components: {},
 
 }
 </script>
@@ -30,12 +27,17 @@ export default {
     padding: 0;
     text-decoration: none;
   }
-#app {
-  width: 100%;
-  height: 100%;
-}
-  html,body{
+  li{
+    list-style: none;
+  }
+
+  body,html{
+   width: 100%;
+   height: 100%;
+ }
+  #app{
     width: 100%;
     height: 100%;
   }
+
 </style>
