@@ -13,7 +13,7 @@
         <input type="file" id="files">
         <span style="line-height: 6rem;margin-left: 1rem">头像</span>
         <span class="pull-right" style="line-height: 6rem;margin-right: 1rem" id="a">
-          <img src="../img/person.png" alt=""> &gt
+          <img src="../img/person.png"> &gt
         </span>
       </section>
 

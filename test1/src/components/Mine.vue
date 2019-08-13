@@ -10,7 +10,7 @@
               <!--  头像  -->
             <img src="../img/person.png" class="title_img pull-left">
               <span class="phone_num_two_line pull-left">
-                <span class="phone_num">123412341234</span>
+                <span class="phone_num">{{names}}</span>
                 <span class="el-icon-mobile-phone p">暂无绑定手机号</span>
               </span>
             <van-icon name="arrow" class="arrow-right pull-right"/>
@@ -113,11 +113,21 @@
 <script>
     export default {
       name: "Mine",
+      data(){
+        return{
+          names:"",
+        }
+      },
       methods: {
         goBack() {
           window.history.go(-1);
         },
       },
+      created(){
+        this.names = this.$store.state.a.message;
+        let abc = this.$store.state;
+        // console.log(abc);
+      }
     }
 </script>
 

@@ -9,7 +9,7 @@
     <div class="main">
       <img src="../img/download.jpg">
       <p class="p1">下载饿了么APP</p>
-      <p class="p2" @click="download_btn  ">下载</p>
+      <p class="p2" @click="download_btn">下载</p>
       <div class="cartridge_frame" v-if="!show">
         <img src="../img/warning.png" class="warning">
         <p class="temporary">IOS用户请前往AppStore下载</p>
@@ -38,7 +38,7 @@
         //   点击确认，提示框消失
         sure_btn_hidden(){
           this.show = true;
-          console.log('000');
+          // console.log('000');
         },
       }
     }
@@ -48,7 +48,7 @@
   .service_center{
     width: 100%;
     height: 100%;
-    animation: fadeInRight 0.2s linear forwards;
+    /*animation: fadeInRight 0.2s linear forwards;*/
   }
   /*  头部  */
   .head{

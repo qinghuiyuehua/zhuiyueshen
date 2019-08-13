@@ -101,6 +101,8 @@ import Vue from "vue"
           IconNameArr:[],
           cc2:"",
           cityPage21:{},
+          cityLatitude:[],
+          cityLongitude:[],
         }
       },
       created(){
@@ -113,7 +115,11 @@ import Vue from "vue"
           console.log(error)
         });
         //  获取  商家信息
-        Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762").then((result)=>{
+        //   获取上个页面传来的   城市经纬度
+        this.cityLatitude = localStorage.getItem('latitude');
+        this.cityLongitude = localStorage.getItem('longitude');
+
+        Vue.axios.get(`https://elm.cangdu.org/shopping/restaurants?latitude=${this.cityLatitude}&longitude=${this.cityLongitude}`).then((result)=>{
           result.data.forEach( v => {
             // console.log(result.data);
             this.infImgArr = result.data;

@@ -49,7 +49,7 @@
       methods:{
         changeBtn(num) {
           this.key = num;
-        }
+        },
       },
       //  外卖页面显示时，给外卖图标设置颜色
       created(){

@@ -7,7 +7,7 @@
       </div>
       <!--   main  -->
       <div class="main">
-        <p class="p1">为账户<span class="p1_span">123456789012</span>购买的会员</p>
+        <p class="p1">为账户<span class="p1_span">{{names}}</span>购买的会员</p>
         <!--   会员特权  -->
         <div class="membership_privileges">
           <transition
@@ -81,10 +81,20 @@
 <script>
     export default {
       name: "MemberCenter",
+      data(){
+        return{
+          names:"",
+        }
+      },
       methods:{
         goBack(){
           window.history.go(-1);
-        }
+        },
+      },
+      created(){
+        this.names = this.$store.state.a.message;
+        let abc = this.$store.state;
+        // console.log(abc);
       }
     }
 </script>
