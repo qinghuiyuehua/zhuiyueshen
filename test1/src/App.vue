@@ -1,17 +1,22 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <!--<div id="appLoading">-->
+      <!--<LoadingPage></LoadingPage>-->
+    <!--</div>-->
+    <div id="app1">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
   import "../node_modules/bootstrap/dist/css/bootstrap.css"
   import "../node_modules/animate.css/animate.css"
-
+  import LoadingPage from "./components/LoadingPage"
+  import Vue from "vue";
 export default {
   name: 'App',
-  components: {},
-
+  components: {LoadingPage}
 }
 </script>
 

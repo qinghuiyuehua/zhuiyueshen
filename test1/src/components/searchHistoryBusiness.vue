@@ -2,7 +2,7 @@
     <div class="HistoryBusiness">
       <h4 class="qwer">搜索历史</h4>
       <ul v-if="type22==='1'">
-        <li v-for="(page6,index) in history8" class="result5" :key="index">
+        <li v-for="(page6,index) in history8" class="result5" :key="index" @click="inputClick3(page6)">
           <span class="span1">{{page6}}</span>
           <van-icon name="cross" @click="empty3(index)" />
         </li>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import Vue from "vue";
     export default {
         name: "searchHistoryBusiness",
       data(){
@@ -20,7 +21,7 @@
             type22:"1",
             history8:[],
             page7:[],
-            page8:[],
+            page8:[]
           }
       },
       methods:{
@@ -44,6 +45,11 @@
             }
             let arr1= this.page8.join('|');
           localStorage.setItem('pageTwo', arr1);
+        },
+        inputClick3(v){
+            // childByValue是在父组件on监听的方法
+            // 第二个参数this.childValue是需要传的值
+            this.$emit('childByValue', v)
         }
       },
       created() {
@@ -62,6 +68,9 @@
           }
           console.log(this.history8, '数组是否存到值');
         }
+        let geohash=localStorage.getItem('geohash');
+        this.cc13 = JSON.parse(geohash);
+        console.log(this.cc13,'接收到的geohash值');
       }
 
     }

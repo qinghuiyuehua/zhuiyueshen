@@ -44,7 +44,7 @@
           <!--  分类   右侧下拉框  -->
           <van-col span="12" class="right_12">
             <ul v-for="(left,index) in rightArr">
-              <li class="down_right" v-for="(a,index) in left.sub_categories.slice(1)">
+              <li class="down_right" v-for="(a,index) in left.sub_categories.slice(1)" @click="click100(a.name,left.name)" :key="index">
                 <span >{{a.name}}</span>
                 <span class="pull-right">{{a.count}}</span>
               </li>
@@ -161,7 +161,7 @@
     <!--  商品列表  -->
     <div class="inf">
       <van-row>
-        <div  class="infA" v-for="(img,index) in infImgArr">
+        <div  class="infA" v-for="(img,index) in infImgArr" @click="click23(img)">
           <!--第一行-->
           <img class="infImg pull-left" :src="'http://elm.cangdu.org/img/'+ img.image_path">
           <span class="infBrand">品牌</span>
@@ -213,9 +213,26 @@
         infImgArr:[],
         rightArr:[],
         key:'',
+        qwer:[],
       }
     },
     methods:{
+      //点击跳转商家
+      click23(v){
+        this.$router.push({path:"/BusinessInformation",query:{id: v.id}});
+      },
+      //分类商品
+      click100(k,j){
+        //点击分类显示对应商铺
+        let list_category1 = j+'/'+k;
+        console.log(list_category1);
+        //根据商铺名称进行筛选
+        this.infImgArr = this.qwer.filter((shop)=>{
+          return shop.category == list_category1;
+        });
+        this.show_1=!this.show_1;
+        this.show = false;
+      },
       //   获取分类的  左下拉框的图标
       getImgPath(v){
         //传递过来的图片地址需要处理后才能正常使用
@@ -291,15 +308,16 @@
         //  获取 异国料理的 count
         this.sortCountOne = result.data.slice(0,1)[0].count;
         this.sortList = result.data.slice(1,9);
-        console.log(this.sortList.slice(0,8));
+        console.log(this.sortList.slice(1,9),'121');
       }).catch((error)=>{
         console.log(error);
       });
 
       //  获取  商家信息
       Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762").then((result)=>{
-        // console.log(result.data);
+        console.log(result.data,'所有商铺列表');
         this.infImgArr = result.data;
+        this.qwer=result.data;
         result.data.forEach( v=>{
           this.supportsArr0 = v.supports[0];
           this.supportsArr1 = v.supports[1];
@@ -307,14 +325,6 @@
         })
       }).catch((error)=>{
         console.log(error)});
-
-      //   智能排序  排序
-      Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762&order_by=4").then((result)=>{
-        // console.log(result.data);
-        this.dropDownSortSelect = result.data;
-      }).catch((error)=>{
-        console.log(error);
-      });
     },
   }
 </script>

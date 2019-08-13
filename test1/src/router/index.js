@@ -48,6 +48,9 @@ import ServiceCenter from "../components/ServiceCenter"
 //   下载饿了么APP
 import DownloadApp from "../components/DownloadApp"
 
+import FoodDetails from "../components/FoodDetails"
+import LoadingPage from "../components/LoadingPage"
+import Settlement from "../components/Settlement"
 
 export default new Router({
   routes: [
@@ -93,6 +96,10 @@ export default new Router({
     {path:"/searchaddress",component:SearchAddress,name:"searchaddress"},
     {path:"/updatepassword",component:UpdatePassword,name:"updatepassword"},
     {path:"/BusinessInformation",component:BusinessInformation},
-    {path:"/BusinessDetails",component:BusinessDetails}
+    {path:"/BusinessDetails",component:BusinessDetails},
+    {path:"/FoodDetails",component:FoodDetails},
+  //  预加载动画
+    {path:"/LoadingPage",component:LoadingPage},
+    {path:"/Settlement",component:Settlement}
   ]
 })

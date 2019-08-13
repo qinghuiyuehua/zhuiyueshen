@@ -1,7 +1,7 @@
 <template>
     <div class="find">
       <div class="head">
-        <i class="el-icon-arrow-left arrow-left"></i>
+        <i class="el-icon-arrow-left arrow-left" @click="goTo"></i>
         <span class="search_find">搜索</span>
       </div>
 
@@ -9,7 +9,7 @@
         <input type="search" placeholder="请输入商家或美食名称" class="search_input" v-model="pageTwo">
         <input type="submit" class="search_submit" @click="inputClick2">
       </el-row>
-      <searchHistoryBusiness v-if="type20==='1'"></searchHistoryBusiness>
+      <searchHistoryBusiness v-if="type20==='1'" v-on:childByValue="childByValue"></searchHistoryBusiness>
       <searchResultBusiness v-if="type20==='2'" :image10="cityPage5"></searchResultBusiness>
     </div>
 </template>
@@ -35,6 +35,17 @@
         console.log(this.cc3,'接收到的geohash值');
       },
       methods:{
+        childByValue: function (v) {
+          // childValue就是子组件传过来的值
+          Vue.axios.get("https://elm.cangdu.org/v4/restaurants?geohash="+this.cc3+"&keyword="+v).then((result)=>{
+            console.log(result.data,'根据geohash值获取餐馆信息');
+            this.cityPage5=result.data;
+            this.type20="2";
+            // console.log(this.cityPage5);
+          }).catch((error)=>{
+            console.log(error);
+          });
+        },
         inputClick2(){
           let url3 = "https://elm.cangdu.org/v4/restaurants?geohash="+this.cc3+"&keyword="+this.pageTwo;
           console.log(url3);
@@ -65,6 +76,9 @@
               console.log(arr,'搜索后是否有值');
             }
           }
+        },
+        goTo() {
+          window.history.go(-1);
         }
       }
     }

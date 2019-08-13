@@ -75,7 +75,7 @@
                </div>
                <span></span>
              </div>
-             <div v-for="(page14,index) in page13.foods" class="footerZ">
+             <div v-for="(page14,index) in page13.foods" class="footerZ" @click="foodDetailsClick(page14)">
                <div class="footerZ1">
                  <div class="footerZ2">
                    <img :src="'http://elm.cangdu.org/img/'+page14.image_path" alt="">
@@ -114,7 +114,7 @@
               <van-rate
               v-model="score.service_score"
               allow-half
-              size="0.01"
+              size="1"
               gutter="0"
               color="#ff9a0d"
               void-icon="star"
@@ -142,7 +142,7 @@
        </ul>
        <ul class="ulQ">
          <li v-for="ty3 in information" class="liQ">
-           <img :src="'http://elm.cangdu.org/img/'+ty3.avatar" class="imgQ">
+           <img src="//elm.cangdu.org/img/default.jpg" class="imgQ">
            <div class="div1">
              <div class="div11">
                <div class="div111"><p class="div111p1">{{ty3.username}}</p><p class="div111p2">
@@ -195,12 +195,17 @@
         }
       },
       methods:{
+        //  点击跳转食品详情页面
+        foodDetailsClick(v){
+          this.$router.push({path:"/FoodDetails",query:{arrObj99:v}});
+        },
         cancel(){
           this.ty5=1;
         },
         goBack1(){
           window.history.go(-1);
         },
+        //点击筛选
         pageClick(v,k){
           this.key = k;
           // console.log(k,'点击识别点击的第几个');
@@ -208,6 +213,7 @@
           // console.log(h[k].offsetTop,this.$refs.pos2.scrollTop,h[k]);
           this.$refs.pos2.scrollTop=h[k].offsetTop;
         },
+        //点击商品和评价页面互相跳转
         changeColor(id){
           this.colorKey = id;
           if (id===2){
@@ -241,8 +247,13 @@
             this.ty1=1;
           }
         },
+        //点击跳转商家详情页面
         Details(){
-          this.$router.push({path:"/BusinessDetails",query:{arrObj9:this.cityPage31}});
+          this.$router.push({path:"/BusinessDetails"});
+          //通过JSON向商家详情页面传递数据
+          let q = JSON.stringify(this.cityPage31);
+          localStorage.removeItem('arrObj9');
+          localStorage.setItem('arrObj9',q);
         },
         activity(){
           this.ty5=2;
@@ -284,6 +295,9 @@
 </script>
 
 <style scoped>
+  .van-rate{
+    size: 1.1rem;
+  }
   .aaaa{
     background: #f5f5f5;
   }
@@ -397,7 +411,7 @@
   .vanOne{
     position: absolute;
     left: 0.1rem;
-    top: 0.1rem;
+    top: 0.8rem;
     z-index: 100;
     font-size: 2.5rem;
     color: #fff;
@@ -495,7 +509,7 @@
     font-size: 2rem;
   }
   .footerZ32{
-    font-size: .5rem;
+    font-size: 1.1rem;
     color: #999;
     line-height: .6rem;
   }
@@ -512,7 +526,7 @@
     justify-content: space-between;
   }
   .footerZ41 .span2{
-    font-size: .5rem;
+    font-size: 1.1rem;
     color: #f60;
     margin-right: .05rem;
   }
@@ -531,7 +545,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    overflow: hidden;
   }
   .pos1{
     position: fixed;
@@ -621,11 +635,12 @@
     border-bottom: 0;
   }
   .score1{
-    position: fixed;
-    z-index: 10;
+    position: absolute;
     height: 100%;
     width: 100%;
-    padding-top: 14rem;
+    left: 0;
+    top: 14rem;
+    overflow: hidden;
   }
   .score2{
     display: flex;
@@ -652,7 +667,7 @@
     margin-bottom: .2rem;
   }
   .score213{
-    font-size: .8rem;
+    font-size: 1.1rem;
     color: #999;
   }
   .score22 p{
@@ -671,7 +686,7 @@
     margin-right: .5rem;
   }
   .scoreSpan1{
-    font-size: .4rem;
+    font-size: 1.1rem;
     color: #999;
   }
   .classification{
@@ -693,6 +708,7 @@
   .ulQ{
     background-color: #fff;
     padding: 0 .5rem;
+    overflow: hidden;
   }
   .liQ{
     border-top: 1px solid #f1f1f1;
@@ -720,12 +736,13 @@
     margin-bottom: .3rem;
   }
   .div111{
-    font-size: .55rem;
+    font-size: 1.1rem;
     color: #666;
   }
   .div111p1{
     color: #666;
     margin-bottom: .2rem;
+    font-size: 1.1rem;
   }
   .div111p2{
     display: flex;
@@ -733,12 +750,12 @@
     align-items: center;
   }
   .div111p2span{
-    font-size: .55rem;
+    font-size: 1.1rem;
     color: #666;
     margin-left: .15rem;
   }
   .div111p3{
-    font-size: .4rem;
+    font-size: 1.1rem;
     color: #999;
   }
   .foot1{
@@ -761,7 +778,7 @@
     flex-wrap: wrap;
   }
   .footWord{
-    font-size: .55rem;
+    font-size: 1.1rem;
     color: #999;
     width: 10rem;
     padding: .2rem;
@@ -849,6 +866,7 @@
     transform: translateX(-50%);
   }
   .van-icon{
-    line-height: 4rem;
+    line-height: 1rem;
+    size: 1rem;
   }
 </style>

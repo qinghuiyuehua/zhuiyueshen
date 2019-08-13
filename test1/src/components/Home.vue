@@ -252,7 +252,7 @@ import Vue from "vue"
     font-weight: 700;
   }
   .bzp{
-    font-size: 0.5rem;
+    font-size: 1.1rem;
     color: #999;
     border: 0.1rem solid #f1f1f1;
     padding: 0 .04rem;
@@ -266,12 +266,12 @@ import Vue from "vue"
     font-size: 0.4rem;
   }
   .rating{
-    font-size: 0.4rem;
+    font-size: 1.1rem;
     color: #ff9a0d;;
     margin: 0 0.2rem;
   }
   .recent_order_num{
-    font-size: 0.1rem;
+    font-size: 1.1rem;
     transform: scale(0.9);
     color: #666;
   }
@@ -279,7 +279,7 @@ import Vue from "vue"
     color: #fff;
     background-color: #3190e8;
     border: 0.025rem solid #3190e8;
-    font-size: 0.05rem;
+    font-size: 1rem;
     font-weight: 400;
     transform:scale(0.7);
     padding: 0.2rem 0.1rem 0;
@@ -293,7 +293,7 @@ import Vue from "vue"
     transform:scale(0.7);
     border-radius: 0.2rem;
     padding: 0.1rem 0.1rem 0;
-    font-size: 0.1rem;
+    font-size: 1rem;
   }
 
   /*  第三行 */
