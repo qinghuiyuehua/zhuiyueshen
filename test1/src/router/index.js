@@ -28,8 +28,16 @@ import MySurplus from "../components/MySurplus"
 import SurplusDescribe from "../components/SurplusDescribe"
 //   我的优惠
 import MyBenefit from "../components/MyBenefit"
+//  红包说明
 import RedPacketDescribe from "../components/RedPacketDescribe"
-
+//   代金券说明
+import BusinessVouchersDescribe from "../components/BusinessVouchersDescribe"
+//  查看红包历史
+import CheckRedHistory from "../components/CheckRedHistory"
+//  兑换红包
+import ExchangeRed from "../components/ExchangeRed"
+//   推荐有奖
+import Introduce from "../components/Introduce"
 //   我的积分
 import MyIntegral from "../components/MyIntegral"
 import IntegralDescribe from "../components/IntegralDescribe"
@@ -70,6 +78,10 @@ export default new Router({
     {path:"/surplusdescribe",component:SurplusDescribe},
     {path:"/mybenefit",component:MyBenefit},
     {path:"/redpacketdescribe",component:RedPacketDescribe},
+    {path:"/businessvouchersdescribe",component:BusinessVouchersDescribe},
+    {path:"/checkredhistory",component:CheckRedHistory},
+    {path:"/exchangered",component:ExchangeRed},
+    {path:"/introduce",component:Introduce},
     {path:"/myintegral",component:MyIntegral},
     {path:"/integraldescribe",component:IntegralDescribe},
     {path:"/integral",component:Integral},

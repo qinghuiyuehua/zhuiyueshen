@@ -125,7 +125,11 @@
       },
       created(){
         Vue.axios.get("https://elm.cangdu.org/v3/profile/explain").then((result)=>{
-          console.log(result.data);
+          console.log(result.data.activityCaption);
+          result.data.forEach(v=>{
+            console.log(v.match(/^.+Caption$/g));
+          })
+
         }).catch((error)=>{
           console.log(error);
         })

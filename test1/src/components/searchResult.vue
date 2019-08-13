@@ -22,7 +22,7 @@
         image9: {
           handler(newName, oldName) {
             this.image9.forEach((v,index)=>{
-              // console.log(v,'搜索结果页');
+              console.log(v,'搜索结果页');
             });
           },
           immediate: true,
@@ -37,6 +37,13 @@
           let q = JSON.stringify(v.geohash);
           localStorage.removeItem('geohash');
           localStorage.setItem('geohash',q);
+
+          //    将城市经纬度  传给外卖页面
+          let cityLatitude = v.latitude;
+          localStorage.setItem('latitude',cityLatitude);
+
+          let cityLongitude = v.longitude;
+          localStorage.setItem('longitude', cityLongitude);
 
           //通过JSON向搜索记录页传递搜索历史记录
           let p = JSON.stringify(v);

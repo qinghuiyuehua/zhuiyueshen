@@ -60,7 +60,6 @@
       </section>
     </div>
 
-
 </template>
 
 <script>
@@ -96,7 +95,6 @@
           });
         },
         sends(){
-
           console.log(names.value,passwords.value,tests.value)
            // 登录接口
           // Vue.axios.post("https://elm.cangdu.org/v2/login",{ withCredentials: true,},{
@@ -152,9 +150,7 @@
                 }).then(() => {
                   // on close
                 });
-
               }
-
             });
           }
         },
@@ -167,10 +163,8 @@
           method: 'post',
           url: "https://elm.cangdu.org/v1/captchas",
           withCredentials: true, // 默认的
-
-
         }).then(res => {
-          console.log(res);
+            // console.log(res);
             this.code1 = res.data;
         });
       }

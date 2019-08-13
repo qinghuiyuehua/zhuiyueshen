@@ -1,7 +1,7 @@
 <template>
     <div class="find">
       <div class="head">
-        <i class="el-icon-arrow-left arrow-left"></i>
+        <i class="el-icon-arrow-left arrow-left pull-left"></i>
         <span class="search_find">搜索</span>
       </div>
 
@@ -74,24 +74,23 @@
   .find{
     background: #f5f5f5;
     height: 100%;
+    width: 100%;
   }
   .head{
     width:100%;
     line-height:3.5rem;
     background-color: #3190e8;
     z-index:100;
+    text-align: center;
   }
   .arrow-left{
     color:white;
-    font-size:1.5rem;
-    margin: 0.8rem 0 0 1rem;
-    background-color: #3190e8;
+    line-height:3.5rem;
+    font-size: 2rem;
   }
   .search_find{
-    color:white;
-    font-size:1.5rem;
-    margin: 0.8rem 0 0 8rem;
-    background-color: #3190e8;
+    color: white;
+    font-size: 2rem;
   }
 
   .input_btn{

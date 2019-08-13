@@ -34,7 +34,7 @@
             <span class="pull-right foreign_count sort_count">{{sortCountOne}}</span>
             <ul v-for="(leftV,index) in sortList">
               <li class="sortList_left" :class="{changeStyle:key == leftV.name}" @click="selectTitle(leftV.name)">
-                <img :src="getImgPath(leftV.image_url)"class="sort_img">
+                <img v-if="leftV.image_url" :src="getImgPath(leftV.image_url)"class="sort_img">
                 {{leftV.name}}
                 <van-icon name="arrow" class="pull-right sort_arrow"/>
                 <span class="pull-right sort_count">{{leftV.count}}</span>
@@ -54,27 +54,27 @@
       <!--  排序下拉框  -->
       <div  v-if="!show_2" class="drop_down_sort">
         <ul>
-          <li >
+          <li @click="select(4)">
             <i class="el-icon-sort"></i>
             <span>智能排序</span>
           </li>
-          <li>
+          <li @click="select(5)">
             <i class="el-icon-location-outline"></i>
             <span>距离最近</span>
           </li>
-          <li @click="sortSelect(3)">
+          <li @click="select(6)">
             <van-icon name="fire-o" class="fire-o"/>
             <span>销量最高</span>
           </li>
-          <li >
+          <li @click="select(1)">
             <van-icon name="after-sale" class="after-sale" />
             <span>起送价最低</span>
           </li>
-          <li >
+          <li @click="select(2)">
             <i class="el-icon-time"></i>
             <span>配送速度最快</span>
           </li>
-          <li >
+          <li @click="select(3)">
             <i class="el-icon-star-off"></i>
             <span>评分最高</span>
           </li>
@@ -82,63 +82,62 @@
 
       </div>
       <!--  筛选下拉框 -->
-      <div   v-if="!show_3"  class="screen">
+      <div  v-if="!show_3"  class="screen">
         <div class="screen_top">
           <span>配送方式</span>
           <van-row>
             <van-col span="8">
-
-              <van-button class="screen_btn">
-                <van-icon name="logistics"/>
-                <!--<i class="el-icon-check"></i>-->
-                <span>蜂鸟专送</span>
-              </van-button>
+              <p class="screen_btn" @click="duihao(0)">
+                <van-icon name="logistics" v-if="show_duihao_0" class="bird"/>
+                <i class="el-icon-check" v-if="!show_duihao_0"></i>
+                <span class="kind_name" :class="{bgc: checkKey==0}">蜂鸟专送</span>
+              </p>
             </van-col>
 
             <van-col span="24">商家属性(可以多选)</van-col>
 
             <van-col span="8">
-              <van-button type="default" class="screen_btn btn_6">
-                <span class="pin">品</span>
-                <!--<i class="el-icon-check"></i>-->
-                <span>品牌商家</span>
-              </van-button>
+              <p type="default" class="screen_btn btn_6" @click="duihao(1)">
+                <span class="pin" v-if="show_duihao_1">品</span>
+                <i class="el-icon-check" v-if="!show_duihao_1"></i>
+                <span class="kind_name" :class="{bgc: checkKey==1}">品牌商家</span>
+              </p>
             </van-col>
             <van-col span="8">
-              <van-button type="default" class="screen_btn btn_6">
-                <span class="bao">保</span>
-                <!--<i class="el-icon-check"></i>-->
-                <span>外卖保</span>
-              </van-button>
+              <p type="default" class="screen_btn btn_6" @click="duihao(2)">
+                <span class="bao" v-if="show_duihao_0">保</span>
+                <i class="el-icon-check" v-if="!show_duihao_0" :class="{icon_check: checkKey==2}"></i>
+                <span class="kind_name">外卖保</span>
+              </p>
             </van-col>
             <van-col span="8">
-              <van-button type="default" class="screen_btn btn_6">
-                <span class="zhun">准</span>
-                <!--<i class="el-icon-check"></i>-->
-                <span>准时达</span>
-              </van-button>
+              <p type="default" class="screen_btn btn_6" @click="duihao(3)">
+                <span class="zhun" v-if="show_duihao_0">准</span>
+                <i class="el-icon-check" v-if="!show_duihao_0" :class="{icon_check: checkKey==3}"></i>
+                <span class="kind_name">准时达</span>
+              </p>
             </van-col>
 
             <van-col span="8">
-              <van-button type="default" class="screen_btn btn_6">
-                <span class="xin">新</span>
-                <!--<i class="el-icon-check"></i>-->
-                <span>新店</span>
-              </van-button>
+              <p type="default" class="screen_btn btn_6" @click="duihao(4)">
+                <span class="xin" v-if="show_duihao_0">新</span>
+                <i class="el-icon-check" v-if="!show_duihao_0" :class="{icon_check: checkKey==4}"></i>
+                <span class="kind_name">新店</span>
+              </p>
             </van-col>
             <van-col span="8">
-              <van-button type="default" class="screen_btn btn_6">
-                <span class="fu">付</span>
-                <!--<i class="el-icon-check"></i>-->
-                <span>在线支付</span>
-              </van-button>
+              <p type="default" class="screen_btn btn_6" @click="duihao(5)">
+                <span class="fu" v-if="show_duihao_0">付</span>
+                <i class="el-icon-check" v-if="!show_duihao_0" :class="{icon_check: checkKey==5}"></i>
+                <span class="kind_name">在线支付</span>
+              </p>
             </van-col>
             <van-col span="8">
-              <van-button type="default" class="screen_btn btn_6">
-                <span class="piao">票</span>
-                <!--<i class="el-icon-check"></i>-->
-                <span>开发票</span>
-              </van-button>
+              <p type="default" class="screen_btn btn_6" @click="duihao(6)">
+                <span class="piao" v-if="show_duihao_0">票</span>
+                <i class="el-icon-check" v-if="!show_duihao_0" :class="{icon_check: checkKey==6}"></i>
+                <span class="kind_name">开发票</span>
+              </p>
             </van-col>
 
           </van-row>
@@ -147,10 +146,10 @@
         <div class="clear_sure">
           <van-row>
             <van-col span="12">
-              <van-button type="default" class="clear">清空</van-button>
+              <p class="clear">清空</p>
             </van-col>
             <van-col span="12">
-              <van-button type="primary" class="sure">确定</van-button>
+              <p class="sure">确定</p>
             </van-col>
           </van-row>
         </div>
@@ -170,7 +169,6 @@
           <span class="bzp pull-right">{{supportsArr1.icon_name}}</span>
           <span class="bzp pull-right">{{supportsArr0.icon_name}}</span>
 
-
           <br>
           <!--第二行-->
           <van-rate class="star"
@@ -182,7 +180,7 @@
           <span class="rating">{{img.rating}}</span>
           <span class="recent_order_num">月售{{img.recent_order_num}}单</span>
           <span class="zsd pull-right">准时达</span>
-          <span class="delivery_mode_text pull-right">{{img.delivery_mode.text}}</span>
+          <span v-if="img.delivery_mode" class="delivery_mode_text pull-right">{{img.delivery_mode.text}}</span>
           <br>
           <!--第三行-->
           <span class="float_minimum_order_amount">￥{{img.float_minimum_order_amount}}起送/配送费约￥{{img.float_delivery_fee}}</span>
@@ -207,12 +205,18 @@
         show_1:true,
         show_2:true,
         show_3:true,
-        dropDownSortSelect:[],
+        show_duihao_0:true,
+        show_duihao_1:true,
+        checkKey:'',
+        key1:'',
+        SortSelect:[],
         sortCountOne:[],
         sortList:[],
         infImgArr:[],
         rightArr:[],
         key:'',
+        cityLatitude:[],
+        cityLongitude:[],
       }
     },
     methods:{
@@ -232,14 +236,14 @@
         return 'https://fuss10.elemecdn.com' + url
       },
       //   点击黑色透明背景，让黑色背景，下拉框消失
-      overlay(){
+      overlay (){
         this.show = false;
         this.show_1 = true;
         this.show_2 = true;
         this.show_3 = true;
       },
       //  当前只显示1个下拉列表
-      threeArrow(v) {
+      threeArrow (v) {
         if (v == 1){
           this.show_1 = !this.show_1;
           this.show_2 = true;
@@ -270,16 +274,35 @@
 
       },
       //  点击左上角箭头，返回外卖页面
-      go_back(){
+      go_back (){
         this.$router.push({path:"/home"});
       },
       //   分类下拉框中，点击左侧名称，右侧显示对应内容, key是改变 li 背景的标识(在data中定义)
-      selectTitle(leftName){
+      selectTitle (leftName){
         this.key = leftName;
         this.rightArr = this.sortList.filter((m) => {
           return m.name === leftName;
         });
       },
+    //   点击，选择排序方式
+      select (v){
+        //   选择排序方式之后，将排序下拉框收起、遮罩层取消
+        this.show = false;
+        this.show_2 = true;
+        //   获取排序之后的数据
+        Vue.axios.get(`https://elm.cangdu.org/shopping/restaurants?latitude=${this.cityLatitude}&longitude=${this.cityLongitude}&order_by=${v}`).
+        then((result)=>{
+          // console.log(result.data);
+          this.infImgArr = result.data;
+        }).catch((error)=>{
+          console.log(error);
+        });
+        //
+      },
+      duihao (v){
+        this.checkKey = v;
+        this.show_duihao_0 = !this.show_duihao_0;
+      }
     },
     created(){
       // this.show = !this.show;
@@ -291,13 +314,17 @@
         //  获取 异国料理的 count
         this.sortCountOne = result.data.slice(0,1)[0].count;
         this.sortList = result.data.slice(1,9);
-        console.log(this.sortList.slice(0,8));
+        // console.log(this.sortList.slice(0,8));
       }).catch((error)=>{
         console.log(error);
       });
 
       //  获取  商家信息
-      Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762").then((result)=>{
+      //   获取城市页面传来的   城市经纬度
+      this.cityLatitude = localStorage.getItem('latitude');
+      this.cityLongitude = localStorage.getItem('longitude');
+
+      Vue.axios.get(`https://elm.cangdu.org/shopping/restaurants?latitude=${this.cityLatitude}&longitude=${this.cityLongitude}`).then((result)=>{
         // console.log(result.data);
         this.infImgArr = result.data;
         result.data.forEach( v=>{
@@ -307,14 +334,6 @@
         })
       }).catch((error)=>{
         console.log(error)});
-
-      //   智能排序  排序
-      Vue.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude=31.22967&longitude=121.4762&order_by=4").then((result)=>{
-        // console.log(result.data);
-        this.dropDownSortSelect = result.data;
-      }).catch((error)=>{
-        console.log(error);
-      });
     },
   }
 </script>
@@ -490,34 +509,54 @@
   }
 
   /*  筛选下拉框  */
+  .bgc{
+    color: #3190e8;
+  }
   .screen{
     animation: fadeInDown 0.25s linear forwards;
     margin-top: 6.5rem;
     position: fixed;
     z-index: 9;
+    width: 100%;
     background: gainsboro;
     font-size: 1rem;
   }
   .screen_btn{
     border: 0.11rem solid #eee;
+    border-radius: 0.3rem;
     padding-left: 1rem;
     line-height: 3rem;
     height: 3rem;
-    width: 9.5rem;
+    width: 9rem;
     margin: 1rem 1.5rem 1rem 0;
     background: white;
   }
-  .btn_6{
-    margin-bottom: -1rem;
+  .el-icon-check{
+    color: blue;
+    font-size: 1.8rem;
+    font-family: Microsoft Yahei;
+    font-weight: 800;
+    position: fixed;
+    margin: 0.5rem 0 0 -0.5rem;
   }
-
-  .pin,.bao,.zhun,.xin,.fu,.piao{
+  .kind_name{
+    margin-left: 1.5rem;
+  }
+  .btn_6{
+    margin-bottom: -0.5rem;
+    line-height: 3rem
+  }
+  .bird, .pin, .bao, .zhun, .xin, .fu, .piao{
     border: 0.115rem solid;
     border-radius: 0.25rem;
-    margin-right: 0.2rem;
     font-size: 1rem;
     padding: 0.2rem 0.2rem 0rem 0.2rem;
-    /*margin-left: -2rem;*/
+    position: fixed;
+    line-height: 1.4rem;
+    margin: 0.5rem 0 0 -0.5rem;
+  }
+  .bird{
+    border:0;
   }
   .pin{
     color: rgb(63, 189, 230);
@@ -552,10 +591,19 @@
   }
   .clear, .sure{
     width: 95%;
+    line-height: 3.8rem;
     margin: 0.5rem 0 0.5rem 0.25rem;
     border-radius: 0.5rem;
     font-size: 2rem;
     font-weight: 300;
+    text-align: center;
+  }
+  .clear{
+    background: white;
+  }
+  .sure{
+    background: #56d176;
+    color: white;
   }
   .clear_sure{
     z-index: 10;

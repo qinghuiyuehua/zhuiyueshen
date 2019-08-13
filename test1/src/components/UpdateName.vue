@@ -18,10 +18,6 @@
 </template>
 
 <script>
-  // <!--if(ones.value.length>0 && ones.value.length<6){-->
-  //   <!--this.change1 = false;-->
-  //   <!--this.change2 = true;-->
-  // <!--}-->
     export default {
         name: "UpdateName",
        data(){
